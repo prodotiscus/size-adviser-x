@@ -52,10 +52,10 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
   @override
   Widget build(BuildContext context) {
     if (FirebaseAuth.instance.currentUser == null) {
-      Navigator.pushReplacementNamed(context, '/email-signin');
+      Navigator.of(context).pushReplacementNamed('/email-signin');
     }
     if (genderSelected != -1 && agreement) {
-      Navigator.pushReplacementNamed(context, '/tab-screen');
+      Navigator.of(context).pushReplacementNamed('/tab-screen');
     }
 
     return Scaffold(
