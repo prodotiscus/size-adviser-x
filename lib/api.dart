@@ -102,7 +102,7 @@ class DfgBrand {
     for (var el in json["systemsOfSize"]) {
       l1.add(SizeStandardPair.fromJson(el));
     }
-    return DfgBrand(json["brand"], l1, json["triedOn"])
+    return DfgBrand(json["brand"], l1, json["triedOn"]);
   }
 }
 
