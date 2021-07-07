@@ -12,27 +12,89 @@ class MyCollectionScreen extends StatefulWidget {
 }
 
 class _MyCollectionScreenState extends State<MyCollectionScreen> {
+  List<Widget> col = [];
+  bool collectionLoaded = false;
+
   @override
   Widget build(BuildContext context) {
     registerUser();
+    if (!collectionLoaded) {
+      loadCollection();
+      collectionLoaded = true;
+    }
 
     return Scaffold(
       body: Center(
           child: Column (
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "MY COLLECTION",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 55
-                ),
+              const Divider(
+                height: 20,
+                thickness: 1,
+                indent: 20,
+                endIndent: 20,
               ),
+              Row (
+                mainAxisAlignment: MainAxisAlignment.start, //change here don't //worked
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      child: Align(
+                        child: Text(
+                          "DETAILS"
+                        ),
+                      ),
+                      margin: EdgeInsets.only(left: 20.0),
+                  ),
+                  new Spacer(),
+                  Align(
+                      child: Text(
+                        "size"
+                      )
+                  ),
+                  new Spacer(),
+                  Container(
+                    child: Align(
+                      child: Text(
+                          "fit"
+                      ),
+                    ),
+                    margin: EdgeInsets.only(right: 20.0),
+                  ),
+                ],
+              ),
+              const Divider(
+                height: 20,
+                thickness: 1,
+                indent: 20,
+                endIndent: 20,
+              ),
+              Column(
+                children: (() {
+                  if (col.isEmpty) {
+                    return <Widget>[];
+                  } else {
+                    return col;
+                  }
+                })()
+              )
             ],
           )
       ),
     );
+  }
+
+  void loadCollection() async {
+    var spf = await SharedPreferences.getInstance();
+    var api = SizeAdviserApi();
+    var col2 = await api.getCollection(spf);
+
+    setState(() {
+      col = <Widget>[
+        Text("Number of items: " + col2.length.toString()),
+        Text("B"),
+        Text("C")
+      ];
+    });
   }
 
   void registerUser() async {

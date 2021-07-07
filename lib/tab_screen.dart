@@ -1,5 +1,8 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/colors.dart';
 import 'package:size_adviser/profile_screen.dart';
 import 'package:size_adviser/fitting_room_screen.dart';
@@ -19,6 +22,19 @@ class _TabScreenState extends State<TabScreen> {
       appBar: AppBar(
         title: Text("Size Adviser"),
         backgroundColor: sa_blue,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'Settings'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: DefaultTabController(
@@ -84,5 +100,17 @@ class _TabScreenState extends State<TabScreen> {
         ),
       ),
     );
+  }
+
+  void handleClick(String value) async {
+    switch (value) {
+      case "Logout":
+        FirebaseAuth.instance.signOut();
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+        Navigator.pushNamed(context, '/email-signin');
+        break;
+    }
+
   }
 }

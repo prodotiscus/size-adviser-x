@@ -16,25 +16,12 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
   int genderSelected = -1;
   bool agreement = false;
 
-  void selectGenderByClick(int genderValue) {
-    setState(() async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setInt("userGender", genderValue);
-      setState(() {
-        genderSelected = genderValue;
-      });
-    });
-  }
-
-  Future<void> checkGenderInPrefs() async {
+  void selectGenderByClick(int genderValue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? gotGender = prefs.getInt("userGender");
-    if (gotGender != null) {
-      setState(() {
-        agreement = true;
-        genderSelected = gotGender;
-      });
-    }
+    await prefs.setInt("userGender", genderValue);
+    setState(() {
+      genderSelected = genderValue;
+    });
   }
   
   void agree () {
@@ -46,17 +33,24 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
   @override
   void initState() {
     super.initState();
-    checkGenderInPrefs();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (FirebaseAuth.instance.currentUser == null) {
-      Navigator.of(context).pushReplacementNamed('/email-signin');
-    }
-    if (genderSelected != -1 && agreement) {
-      Navigator.of(context).pushReplacementNamed('/tab-screen');
-    }
+
+    Future.delayed(Duration.zero, () {
+      print(FirebaseAuth.instance.currentUser);
+      print(genderSelected);
+      print(agreement);
+      if (FirebaseAuth.instance.currentUser == null) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/email-signin', (Route<dynamic> route) => false);
+      }
+      else if (genderSelected != -1 && agreement) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/tab-screen', (Route<dynamic> route) => false);
+      }
+    });
 
     return Scaffold(
         appBar: AppBar(

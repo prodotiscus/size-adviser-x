@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'colors.dart';
 import 'calibration_screen.dart';
@@ -33,8 +34,17 @@ Future<void> main() async {
 class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    new Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushNamed(context, '/calibration');
+    new Future.delayed(const Duration(seconds: 3), () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? gotGender = prefs.getInt("userGender");
+      if (gotGender == null) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/calibration', (Route<dynamic> route) => false);
+      } else {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/tab-screen', (Route<dynamic> route) => false);
+      }
+      //Navigator.pushReplacementNamed(context, '/calibration');
     });
 
     return Scaffold(
