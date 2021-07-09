@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'authentication.dart';
 import 'colors.dart';
 
 class EmailSignInScreen extends StatefulWidget {
@@ -43,6 +44,16 @@ class _EmailSignInScreenState extends State<EmailSignInScreen> {
       }
     }
 
+    void google_sign_in() async {
+      await signInWithGoogle();
+      Navigator.pushReplacementNamed(context, '/calibration');
+    }
+
+    void fb_sign_in() async {
+      await signInWithFacebook();
+      Navigator.pushReplacementNamed(context, '/calibration');
+    }
+
     return Scaffold(
         body: Center(
             child: Column(
@@ -70,6 +81,16 @@ class _EmailSignInScreenState extends State<EmailSignInScreen> {
                     // Within the CalibrationScreen widget
                     onPressed: send_signin_data,
                     child: Text("Sign In"),
+                  ),
+                  ElevatedButton(
+                    // Within the CalibrationScreen widget
+                    onPressed: google_sign_in,
+                    child: Text("Sign In With Google"),
+                  ),
+                  ElevatedButton(
+                    // Within the CalibrationScreen widget
+                    onPressed: fb_sign_in,
+                    child: Text("Sign In With Facebook"),
                   ),
                   if (_invalid_ep) Text(
                     "Invalid e-mail or password",

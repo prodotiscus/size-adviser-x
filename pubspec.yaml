@@ -36,6 +36,9 @@ dependencies:
   flutter_swiper: ^1.1.6
   scroll_snap_list: ^0.7.0
   carousel_slider: ^3.0.0
+  google_sign_in: ^4.5.1
+  flutter_facebook_auth: ^1.0.0
+  flutter_facebook_login: ^1.2.0
 
 dev_dependencies:
   flutter_test:

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "862763273858-pa09sl2hks0rh16j2u3stvtc1144e0up.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prodotiscus.size_adviser",
+            "certificate_hash": "cf8dfe610da8e7c350e319acdd9a01896292db7e"
+          }
+        },
+        {
           "client_id": "862763273858-d8f1ts3qcvc9c15mkm0cm4hu3urn7ghp.apps.googleusercontent.com",
           "client_type": 3
         }

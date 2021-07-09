@@ -68,7 +68,8 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
                 indent: 20,
                 endIndent: 20,
               ),
-              Column(
+              SingleChildScrollView(
+              child: Column(
                 children: (() {
                   if (col.isEmpty) {
                     return <Widget>[];
@@ -76,7 +77,7 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
                     return col;
                   }
                 })()
-              )
+              ))
             ],
           )
       ),
@@ -89,12 +90,81 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
     var col2 = await api.getCollection(spf);
 
     setState(() {
-      col = <Widget>[
-        Text("Number of items: " + col2.length.toString()),
-        Text("B"),
-        Text("C")
-      ];
+      var c = <Widget>[];
+      for (var item in col2) {
+        c.add(itemCard(item));
+      }
+      col = c;
     });
+  }
+  
+  Widget defMargin(Widget w) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      child: w
+    );
+  }
+
+  Text fitValueColored(int fitValue) {
+    String? w = null;
+    Color? c = null;
+
+    switch(fitValue) {
+      case 1: {
+        w = "1 SIZE DOWN";
+        c = Colors.red;
+      }
+      break;
+      case 2: {
+        w = "TOO SMALL";
+        c = Colors.orange;
+      }
+      break;
+      case 3: {
+        w = "IDEAL";
+        c = Colors.green;
+      }
+      break;
+      case 4: {
+        w = "TOO BIG";
+        c = Colors.orange;
+      }
+      break;
+      case 5: {
+        w = "1 SIZE UP";
+        c = Colors.red;
+      }
+      break;
+    }
+    return Text(w!, style:TextStyle(color: c!));
+  }
+
+  Widget itemCard(CollectionItem item) {
+    return Center(
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            defMargin(Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                new Text(item.date),
+                new Text(item.standard),
+              ],
+            )),
+            defMargin(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  new Text(item.brand, style: TextStyle(fontWeight: FontWeight.bold)),
+                  new Text(item.size, style: TextStyle(fontWeight: FontWeight.bold)),
+                  fitValueColored(item.fitValue)
+                ]
+              )
+            )
+          ],
+        )
+      )
+    );
   }
 
   void registerUser() async {

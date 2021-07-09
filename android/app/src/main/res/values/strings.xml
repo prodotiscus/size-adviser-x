@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="size_adviser">Size Adviser</string>
+    <string name="app_name">Size Adviser</string>
+    <string name="facebook_app_id">428600174798133</string>
+    <string name="fb_login_protocol_scheme">fb428600174798133</string>
 </resources>
