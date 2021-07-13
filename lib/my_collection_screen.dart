@@ -184,87 +184,99 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
   Widget itemCard(CollectionItem item, {bool last = false}) {
     var api = SizeAdviserApi();
     print(api.getItemPhotoURL(item.fittingID, index: 1));
-    return Center(
-      child: Card(
-        elevation: 0,
-        color: Colors.transparent,
-        child: Column(
-          children: <Widget>[
-            const Divider(
-              height: 20,
-              thickness: 1,
-              indent: 10,
-              endIndent: 10,
-            ),
-            defMargin(Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                new Text(
-                  item.date,
-                  style: TextStyle(
-                    color: darkerGray
+    return GestureDetector(
+      onTap: () {_showFittingActions(item.fittingID);},
+      child: Center(
+        child: Card(
+          elevation: 0,
+          color: Colors.transparent,
+          child: Column(
+            children: <Widget>[
+              const Divider(
+                height: 20,
+                thickness: 1,
+                indent: 10,
+                endIndent: 10,
+              ),
+              defMargin(Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  new Text(
+                    item.date,
+                    style: TextStyle(
+                      color: darkerGray
+                    )
+                  ),
+                  new Text(
+                    item.standard,
+                    style: TextStyle(
+                      color: darkerGray
+                    )
+                  )
+                ],
+              )),
+              defMargin(
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      new Text(
+                        item.brand,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: cardTitleSize,
+                          color: darkerGray
+                        )
+                      ),
+                      new Text(
+                        item.size,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: cardTitleSize,
+                          color: darkerGray
+                        )
+                      ),
+                      fitValueColored(item.fitValue)
+                    ]
                   )
                 ),
-                new Text(
-                  item.standard,
-                  style: TextStyle(
-                    color: darkerGray
-                  )
-                )
-              ],
-            )),
-            defMargin(
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    new Text(
-                      item.brand,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: cardTitleSize,
-                        color: darkerGray
-                      )
+              ),
+              if (item.hasPhotos) defMargin(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    GestureDetector(
+                      child: itemPhoto(api, item.fittingID, 0),
+                      onLongPress: () { _showPhotoActions(item.fittingID, 0); },
                     ),
-                    new Text(
-                      item.size,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: cardTitleSize,
-                        color: darkerGray
-                      )
+                    GestureDetector(
+                      child: itemPhoto(api, item.fittingID, 1),
+                      onLongPress: () { _showPhotoActions(item.fittingID, 1); },
                     ),
-                    fitValueColored(item.fitValue)
+                    GestureDetector(
+                      child: itemPhoto(api, item.fittingID, 2),
+                      onLongPress: () { _showPhotoActions(item.fittingID, 2); },
+                    ),
                   ]
                 )
               ),
-            ),
-            if (item.hasPhotos) defMargin(
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  itemPhoto(api, item.fittingID, 0),
-                  itemPhoto(api, item.fittingID, 1),
-                  itemPhoto(api, item.fittingID, 2)
-                ]
-              )
-            ),
-            if (!item.hasPhotos) defMargin(
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Image.asset("images/shoe_placeholder.png", width: 100.0, height: 100.0)
-                    ]
-                )
-            ),
-            if (last) const Divider(
-              height: 20,
-              thickness: 1,
-              indent: 10,
-              endIndent: 10,
-            ),
-          ],
+              if (!item.hasPhotos) defMargin(
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Image.asset("images/shoe_placeholder.png", width: 100.0, height: 100.0)
+                      ]
+                  )
+              ),
+              if (last) const Divider(
+                height: 20,
+                thickness: 1,
+                indent: 10,
+                endIndent: 10,
+              ),
+            ],
+          )
         )
       )
     );
@@ -295,6 +307,56 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
     var api = SizeAdviserApi();
     //api.registerCurrentUser(spf);
     api.boundLoadFittingData(spf, "Adidas", (b) => null);
+  }
+
+  Future<void> _showFittingActions(String fittingID) async {
+    switch (await showDialog<String?>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Fitting actions'),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () { Navigator.pop(context, "RemoveFitting"); },
+                child: const Text('Remove fitting'),
+              )
+            ],
+          );
+        }
+    )) {
+      case "RemoveFitting":
+        var api = SizeAdviserApi();
+        api.removeFitting(fittingID);
+        loadCollection();
+        break;
+      case null:
+        break;
+    }
+  }
+
+  Future<void> _showPhotoActions(String fittingID, int index) async {
+    switch (await showDialog<String?>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text("Actions with photo"),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () { Navigator.pop(context, "RemoveThisPhoto"); },
+                child: const Text("Remove photo"),
+              )
+            ],
+          );
+        }
+    )) {
+      case "RemoveThisPhoto":
+        var api = SizeAdviserApi();
+        api.removePhoto(fittingID, index);
+        loadCollection();
+        break;
+      case null:
+        break;
+    }
   }
 }
 
