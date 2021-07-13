@@ -6,6 +6,7 @@ const colorAccent = Color(0xff03DAC5);
 const grey_100 = Color(0xF5F5F5);
 const grey_300 = Color(0xffE0E0E0);
 const grey_500 = Color(0xff9E9E9E);
+const darkerGray = Color(0xff696969);
 const saDefault = Color(0xff245C9C);
 
 const idealFitColor = Color(0xff77997E);

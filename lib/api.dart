@@ -243,7 +243,7 @@ class SizeAdviserApi {
     if (thumbnail) {
       a2 += "&thumbnail=yes";
     }
-    return a2;
+    return "https://size-adviser.com/$a2";
   }
 
   List<String> getAllStandards() {

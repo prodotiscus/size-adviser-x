@@ -5,10 +5,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'colors.dart';
-import 'calibration_screen.dart';
-import 'email_signin_screen.dart';
-import 'tab_screen.dart';
+import 'package:size_adviser/show_zoomed_of.dart';
+import 'package:size_adviser/colors.dart';
+import 'package:size_adviser/calibration_screen.dart';
+import 'package:size_adviser/email_signin_screen.dart';
+import 'package:size_adviser/tab_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,8 @@ Future<void> main() async {
       // When navigating to the "/calibration" route, build the CalibrationScreen widget.
       '/calibration': (context) => CalibrationScreen(),
       '/email-signin': (context) => EmailSignInScreen(),
-      '/tab-screen': (context) => TabScreen()
+      '/tab-screen': (context) => TabScreen(),
+      '/zoomed-of': (context) => ZoomedOfScreen()
     },
   ),
   );
