@@ -79,6 +79,36 @@ class BoundFittingData {
         RecommendedSize.fromJson(json["recommended_size"])
     );
   }
+
+  List<String> getRecommendedStandards() {
+    List<String> lr = [];
+    for (var ssp in this.recommendation.recommendations) {
+      lr.add(ssp.standard);
+    }
+    return lr;
+  }
+
+  String? recommendedForStandard(String standard) {
+    for (var ssp in this.recommendation.recommendations) {
+      if (ssp.standard == standard) {
+        return ssp.value;
+      }
+    }
+    return null;
+  }
+
+  List<String>? sizeRangeForStandard(String standard) {
+    for (var standardObj in this.brandData.standards) {
+      if (standardObj.name == standard) {
+        return standardObj.sizes;
+      }
+    }
+    return null;
+  }
+
+  String defaultStandardForBrand() {
+    return this.brandData.defaultStandard;
+  }
 }
 
 class SizeStandardPair {
@@ -160,10 +190,10 @@ class SizeAdviserApi {
 
   }
 
-  void boundLoadFittingData (SharedPreferences sharedPreferences, String? brand, Function(BoundFittingData) lbd) async {
+  Future<BoundFittingData> boundLoadFittingData (SharedPreferences sharedPreferences, String? brand) async {
     if (brand == null) {
       var resp = await http.get(Uri.https(saPrefix, mobileSuffix + "/random_brand", {"gender_int": getUserGender(sharedPreferences)}));
-      boundLoadFittingData(sharedPreferences, json.decode(resp.body)["brand"], lbd);
+      return boundLoadFittingData(sharedPreferences, json.decode(resp.body)["brand"]);
     }
 
     var boundLoadArgs = {
@@ -174,7 +204,7 @@ class SizeAdviserApi {
 
     var blaResp = await http.get(Uri.https(saPrefix, mobileSuffix + "/bound_load", boundLoadArgs));
     var bfd = BoundFittingData.fromJson(json.decode(blaResp.body));
-    print(bfd);
+    return bfd;
   }
 
   void tryWithSize(String fittingID, String brand, String size,
