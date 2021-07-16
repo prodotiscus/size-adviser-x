@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,19 +31,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final searchController = TextEditingController();
   final lrMarginValue = 20.0;
   final user = FirebaseAuth.instance.currentUser;
   int _index = 0;
   var _controller1 = PageController(
-    viewportFraction: 0.2,
-    initialPage: 3
+    viewportFraction: 0.2
   );
+  var _controller2 = TextEditingController();
   var api = SizeAdviserApi();
   var profileControl = ProfileSearchControl(
     [], []
   );
   double statsFontSize = 18.0;
+  bool showOnlyTested = false;
+  String filteringPrefix = "";
+  String selectedStandard = "RU";
 
   Widget defMargin(Widget w, {double custom = 10.0}) {
     return Container(
@@ -61,9 +64,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       profileControl.standards = standards;
       profileControl.standards.removeWhere((element) => element == defaultS);
-      profileControl.standards.insert(2, defaultS);
+      profileControl.standards.insert(0, defaultS);
+      selectedStandard = defaultS;
       profileControl.brands = dfg;
     });
+  }
+
+  Widget togglingButton () {
+    return KeyboardVisibilityBuilder(
+        builder: (context, isKeyboardVisible) {
+          if (isKeyboardVisible) return SizedBox.shrink();
+          return Center(
+              child: Container(
+                  child:ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        showOnlyTested = !showOnlyTested;
+                      });
+                    },
+                    child: Text(
+                        !showOnlyTested ? "Show only tested" : "Show all",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        primary: paletteLightGray,
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0)
+                    ),
+                  ),
+                  margin: EdgeInsets.symmetric(vertical: 20.0)
+              )
+          );
+        }
+    );
   }
 
   @override
@@ -108,10 +143,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: darkerGray
                   ),
                 ),
-                margin: EdgeInsets.only(top: 10.0),
+                margin: EdgeInsets.only(top: 20.0),
               ),
               Container(
                 child: TextFormField(
+                  controller: _controller2,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'search',
@@ -119,9 +155,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: sa_blue,
                     ),
                     hintText: "Adidas",
-                    floatingLabelBehavior: FloatingLabelBehavior.always
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon: Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      child: IconButton(
+                        onPressed: () {
+                          _controller2.clear();
+                          filteringPrefix = "";
+                        },
+                        icon: Icon(Icons.clear),
+                        padding: EdgeInsets.all(0.0)
+                      )
+                    ),
                   ),
-                  controller: searchController,
+                  onChanged: (text) {
+                    setState(() {
+                      filteringPrefix = text;
+                    });
+                  },
                 ),
                 margin: EdgeInsets.only(left: lrMarginValue, right: lrMarginValue),
               ),
@@ -132,7 +183,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: PageView.builder(
                     itemCount: profileControl.standards.length,
                     controller: _controller1,
-                    onPageChanged: (int index) => setState(() => _index = index),
+                    onPageChanged: (int index) {
+                      setState(() {
+                        _index = index;
+                        selectedStandard = profileControl.standards[index];
+                      });
+                    },
                     itemBuilder: (_, i) {
                       return Transform.scale(
                         scale: i == _index ? 1 : 0.8,
@@ -226,12 +282,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 custom: 20.0
               ),
-              margin: EdgeInsets.symmetric(vertical: 10.0))
+              margin: EdgeInsets.symmetric(vertical: 10.0)),
+              Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 50.0,
+                    child: ListView(
+                        shrinkWrap: true,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        children: profileList()
+                    ),
+                  )
+              ),
+              togglingButton()
             ],
           )
       ),
     );
 
+  }
+
+  List<Widget> profileList () {
+    List<Widget> l1 = [];
+    List<String> addedLetters = [];
+    var sortedBrands = profileControl.brands;
+    sortedBrands.sort((a, b) => a.brand.compareTo(b.brand));
+    for (var brand in profileControl.brands) {
+      if (showOnlyTested && !brand.triedOn) {
+        continue;
+      }
+      if (filteringPrefix != "" &&
+          !brand.brand.toLowerCase().startsWith(filteringPrefix.toLowerCase())) {
+        continue;
+      }
+
+      if (!addedLetters.any((el) => el == brand.brand[0].toUpperCase())) {
+        l1.add(
+          Text(
+            brand.brand[0].toUpperCase(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: statsFontSize
+            )
+          )
+        );
+        addedLetters.add(brand.brand[0].toUpperCase());
+      }
+
+      String displaySize = "";
+      for(var pair in brand.systemsOfSize) {
+        if (pair.standard == selectedStandard) {
+          displaySize = pair.size;
+        }
+      }
+      l1.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+                brand.brand,
+              style: TextStyle(
+                color: brand.triedOn ? palettePink : Colors.black,
+                fontSize: statsFontSize
+              )
+            ),
+            Text(
+                displaySize,
+              style: TextStyle(
+                color: brand.triedOn ? palettePink : Colors.black,
+                fontSize: statsFontSize
+              )
+            )
+          ],
+        )
+      );
+    }
+    return l1;
   }
 
   String? largerPictureURL(String smallPictureURL) {

@@ -15,7 +15,7 @@ const otherFitColor = Color(0xffE5EBF0);
 const otherFitPressedColor = Color(0xFFCC33);
 const otherFitLinkColor = Color(0xff245C9C);
 
-const palettePink = Color(0xF94B74);
+const palettePink = Color(0xffF94B74);
 const paletteBlue = Color(0xff245C9C);
 const paletteLightGray = Color(0xffE5EBF0);
 
