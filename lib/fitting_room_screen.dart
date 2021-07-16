@@ -31,6 +31,9 @@ class FitController {
   String? brand;
   List<Standard>? standardObj;
   String? fittingID;
+  String? selectedStandard;
+  String? selectedSize;
+  int? fitValue;
 
   FitController (String brand, List<Standard> standardObj) {
     this.brand = brand;
@@ -45,6 +48,13 @@ class FitController {
   }
 
   List<String> get standards => this.standardObj!.map((Standard el) => el.name).toList();
+
+  List<String>? getSelectedRange() {
+    for (var subobj in this.standardObj!) {
+      if (subobj.name == this.selectedStandard) return subobj.sizes;
+    }
+    return null;
+  }
 }
 
 class _FittingRoomScreenState extends State<FittingRoomScreen> {
@@ -53,6 +63,15 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
   var api = SizeAdviserApi();
   Widget? recommendations = null;
   BrandOptionSelector? optionSelector = null;
+  int _standards_index = 0;
+  int _sizes_index = 0;
+  FitController? fitController = null;
+  var standardsController = PageController(
+      viewportFraction: 0.2
+  );
+  var sizesController = PageController(
+      viewportFraction: 0.2
+  );
 
   Widget produceRecommendationWidget(List<Recommendation> lst) {
     List<Widget> listForRow = [];
@@ -95,13 +114,110 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     );
   }
 
+  String? getCurrentRecommended(List<Recommendation> lst, String standard) {
+    var mySize = null;
+    for (var rec in lst) {
+      if (rec.standard == standard) {
+        mySize = rec.value;
+      }
+    }
+    return mySize;
+  }
+
   void loadBoundData() async {
     var spf = await SharedPreferences.getInstance();
     var data = await api.boundLoadFittingData(spf, selectedBrand);
     setState(() {
       recommendations = produceRecommendationWidget(data.recommendation.recommendations);
       optionSelector = BrandOptionSelector(selectedBrand, data.brandsList.list);
+      fitController = new FitController(selectedBrand, data.brandData.standards);
+      fitController!.selectedStandard = fitController!.standards[0];
+      var switchTo = fitController!.getSelectedRange()!.indexOf(
+          getCurrentRecommended(
+              data.recommendation.recommendations,
+              fitController!.selectedStandard!
+          )!
+      );
+      sizesController = PageController(
+          viewportFraction: 0.3,
+          initialPage: switchTo
+      );
+      _sizes_index = switchTo;
     });
+  }
+
+  Widget standardsScroller() {
+    return Container(
+        margin: EdgeInsets.only(top: 10.0),
+        child: SizedBox(
+            height: 50,
+            child: PageView.builder(
+              itemCount: fitController!.standards.length,
+              controller: standardsController,
+              onPageChanged: (int index) {
+                setState(() {
+                  _standards_index = index;
+                  fitController!.selectedStandard = fitController!.standards[index];
+                });
+              },
+              itemBuilder: (_, i) {
+                return Transform.scale(
+                    scale: i == _standards_index ? 1 : 0.8,
+                    child: GestureDetector(
+                      onTap: () {
+                        standardsController.animateToPage(i, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+                      },
+                      child: Text(
+                        fitController!.standards[i],
+                        style: TextStyle(
+                            fontSize: 27,
+                            color: i == _standards_index ? sa_blue : darkerGray,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    )
+                );
+              },
+            )
+        )
+    );
+  }
+
+  Widget sizesScroller() {
+    return Container(
+        margin: EdgeInsets.only(top: 10.0),
+        child: SizedBox(
+            height: 50,
+            child: PageView.builder(
+              itemCount: fitController!.getSelectedRange()!.length,
+              controller: sizesController,
+              onPageChanged: (int index) {
+                setState(() {
+                  _sizes_index = index;
+                  fitController!.selectedSize = fitController!.getSelectedRange()![index];
+                });
+              },
+              itemBuilder: (_, i) {
+                return Transform.scale(
+                    scale: i == _sizes_index ? 1 : 0.8,
+                    child: GestureDetector(
+                      onTap: () {
+                        sizesController.animateToPage(i, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+                      },
+                      child: Text(
+                        fitController!.getSelectedRange()![i],
+                        style: TextStyle(
+                            fontSize: 27,
+                            color: i == _sizes_index ? Colors.black : darkerGray,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    )
+                );
+              },
+            )
+        )
+    );
   }
 
   @override
@@ -175,7 +291,21 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 margin: EdgeInsets.symmetric(vertical: 10.0),
               ),
               const Divider(
-                height: 20,
+                height: 0,
+                thickness: 1,
+                indent: 15,
+                endIndent: 15,
+              ),
+              if (fitController != null) standardsScroller(),
+              const Divider(
+                height: 0,
+                thickness: 1,
+                indent: 15,
+                endIndent: 15,
+              ),
+              if (fitController != null) sizesScroller(),
+              const Divider(
+                height: 0,
                 thickness: 1,
                 indent: 15,
                 endIndent: 15,
