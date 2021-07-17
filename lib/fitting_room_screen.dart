@@ -15,8 +15,8 @@ class FittingRoomScreen extends StatefulWidget {
 }
 
 class BrandOptionSelector {
-  final String selectedBrand;
-  final List<String> allBrands;
+  String selectedBrand;
+  List<String> allBrands;
 
   BrandOptionSelector(this.selectedBrand, this.allBrands);
 
@@ -79,7 +79,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     for (var recom in lst) {
       listForRow.add(
         Container(
-          width: 65.0,
+          width: 75.0,
           padding: EdgeInsets.symmetric(
             vertical: 10.0,
             horizontal: 5.0
@@ -139,11 +139,13 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
               fitController!.selectedStandard!
           )!
       );
+      print("switchTo");
       sizesController = PageController(
           viewportFraction: 0.3,
           initialPage: switchTo
       );
       _sizes_index = switchTo;
+      //sizesController.jumpToPage(switchTo);
     });
   }
 
@@ -274,7 +276,24 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         child: new Text(value),
                       );
                     }).toList(),
-                    onChanged: (_) {},
+                    onChanged: (String? value) {
+                      if (value == null) return;
+                      setState(() {
+                        selectedBrand = value[0] + value.substring(1).toLowerCase();
+                        recommendations = null;
+                        optionSelector = null;
+                        _standards_index = 0;
+                        _sizes_index = 0;
+                        fitController = null;
+                        standardsController = PageController(
+                            viewportFraction: 0.2
+                        );
+                        sizesController = PageController(
+                            viewportFraction: 0.2
+                        );
+                      });
+                      loadBoundData();
+                    },
                   )
               ),
               Container(
@@ -328,7 +347,6 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                     sb  Ib bb
                     Nw  .  Ph
                   ''',
-                  // A number of extension methods are provided for concise track sizing
                   columnSizes: [100.px, 180.px, 100.px],
                   rowSizes: [
                     265.px,
@@ -342,7 +360,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                             child:ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
-                              primary: paletteLightGray
+                              primary: (fitController != null &&
+                                    (fitController!.fitValue == null || fitController!.fitValue != 1))
+                                  ? paletteLightGray : otherFitPressedColor
                           ),
                           child: Container(
                             width: 80,
@@ -358,14 +378,20 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                               )
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              fitController!.fitValue = 1;
+                            });
+                          },
                         )),
                         Container(
                           margin: EdgeInsets.only(top: 15.0),
                             child:ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
-                              primary: paletteLightGray
+                              primary: (fitController != null &&
+                                    (fitController!.fitValue == null || fitController!.fitValue != 2))
+                                  ? paletteLightGray : otherFitPressedColor
                           ),
                           child: Container(
                             width: 60,
@@ -395,7 +421,11 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                                 ]
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              fitController!.fitValue = 2;
+                            });
+                          },
                         )),
                       ]
                     )).inGridArea("sb"),
@@ -406,7 +436,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                             child:ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
-                              primary: idealFitColor
+                              primary: (fitController != null &&
+                                    (fitController!.fitValue == null || fitController!.fitValue != 3))
+                                  ? idealFitColor : otherFitPressedColor
                           ),
                           child: Container(
                             width: 160,
@@ -418,7 +450,12 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                               style: TextStyle(fontSize: 22),
                             ),
                           ),
-                          onPressed: () {},)),
+                          onPressed: () {
+                            setState(() {
+                              fitController!.fitValue = 3;
+                            });
+                          },
+                        )),
                         TextButton(
                           style: TextButton.styleFrom(
                             textStyle: const TextStyle(
@@ -438,7 +475,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
-                              primary: paletteLightGray
+                              primary: (fitController != null &&
+                                    (fitController!.fitValue == null || fitController!.fitValue != 4))
+                                  ? paletteLightGray : otherFitPressedColor
                             ),
                             child: Container(
                               width: 80,
@@ -454,7 +493,11 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                                 )
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                fitController!.fitValue = 4;
+                              });
+                            },
                           )
                         ),
                         Container(
@@ -462,7 +505,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
-                            primary: paletteLightGray
+                            primary: (fitController != null &&
+                                    (fitController!.fitValue == null || fitController!.fitValue != 5))
+                                ? paletteLightGray : otherFitPressedColor
                           ),
                           child: Container(
                             width: 60,
@@ -492,7 +537,11 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                                 ]
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              fitController!.fitValue = 5;
+                            });
+                          },
                         ))
                       ]
                     )).inGridArea("bb"),
