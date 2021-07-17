@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/api.dart';
 import 'package:size_adviser/colors.dart';
@@ -204,15 +205,25 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                       onTap: () {
                         sizesController.animateToPage(i, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
                       },
-                      child: Text(
-                        fitController!.getSelectedRange()![i],
-                        style: TextStyle(
-                            fontSize: 27,
-                            color: i == _sizes_index ? Colors.black : darkerGray,
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-                    )
+                      child: Container(
+                        width: 50.0,
+                        height: 50.0,
+                        child: Center(
+                            child: Card(
+                              elevation: 0,
+                              color: Colors.transparent,
+                              child: Text(
+                                fitController!.getSelectedRange()![i],
+                                style: TextStyle(
+                                    fontSize: 27,
+                                    color: i == _sizes_index ? Colors.black : darkerGray,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                          )
+                        )
+                      )
+                     )
                 );
               },
             )
@@ -309,6 +320,183 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 thickness: 1,
                 indent: 15,
                 endIndent: 15,
+              ),
+              Container(
+                //color: background,
+                child: LayoutGrid(
+                  areas: '''
+                    sb  Ib bb
+                    Nw  .  Ph
+                  ''',
+                  // A number of extension methods are provided for concise track sizing
+                  columnSizes: [100.px, 180.px, 100.px],
+                  rowSizes: [
+                    300.px
+                  ],
+                  children: [
+                  Center(child:Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 30.0),
+                            child:ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: CircleBorder(),
+                              primary: paletteLightGray
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Text(
+                              'too small',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12.0,
+                                  color: sa_blue
+                              )
+                            ),
+                          ),
+                          onPressed: () {},
+                        )),
+                        Container(
+                          margin: EdgeInsets.only(top: 15.0),
+                            child:ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: CircleBorder(),
+                              primary: paletteLightGray
+                          ),
+                          child: Container(
+                            width: 60,
+                            height: 60,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      "1 size",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 12.0,
+                                          color: sa_blue
+                                      )
+                                  ),
+                                  Text(
+                                      "DOWN",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 12.0,
+                                          color: sa_blue
+                                      )
+                                  ),
+                                ]
+                            ),
+                          ),
+                          onPressed: () {},
+                        )),
+                      ]
+                    )).inGridArea("sb"),
+                    Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 30.0, bottom: 20.0),
+                            child:ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: CircleBorder(),
+                              primary: idealFitColor
+                          ),
+                          child: Container(
+                            width: 160,
+                            height: 160,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Text(
+                              'IDEAL FIT',
+                              style: TextStyle(fontSize: 22),
+                            ),
+                          ),
+                          onPressed: () {},)),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(
+                                fontSize: 30,
+                              fontWeight: FontWeight.bold
+                            ),
+                            primary: idealFitColor
+                          ),
+                          onPressed: () {},
+                          child: const Text('GOT IT'),
+                        )
+                      ]).inGridArea("Ib"),
+                    Center(child:Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 30.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: CircleBorder(),
+                              primary: paletteLightGray
+                            ),
+                            child: Container(
+                              width: 80,
+                              height: 80,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(shape: BoxShape.circle),
+                              child: Text(
+                                'too big',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12.0,
+                                  color: sa_blue
+                                )
+                              ),
+                            ),
+                            onPressed: () {},
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 15.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            primary: paletteLightGray
+                          ),
+                          child: Container(
+                            width: 60,
+                            height: 60,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "1 size",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12.0,
+                                    color: sa_blue
+                                  )
+                                ),
+                                Text(
+                                  "UP",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12.0,
+                                    color: sa_blue
+                                  )
+                                ),
+                                ]
+                            ),
+                          ),
+                          onPressed: () {},
+                        ))
+                      ]
+                    )).inGridArea("bb"),
+                  ],
+                ),
               ),
             ],
           )
