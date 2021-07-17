@@ -331,7 +331,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                   // A number of extension methods are provided for concise track sizing
                   columnSizes: [100.px, 180.px, 100.px],
                   rowSizes: [
-                    300.px
+                    265.px,
+                    70.px
                   ],
                   children: [
                   Center(child:Column(
@@ -495,6 +496,30 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ))
                       ]
                     )).inGridArea("bb"),
+                    RawMaterialButton(
+                      onPressed: () {},
+                      elevation: 2.0,
+                      fillColor: sa_blue,
+                      child: Icon(
+                        Icons.add,
+                        size: 35.0,
+                        color: Colors.white
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ).inGridArea("Nw"),
+                    RawMaterialButton(
+                      onPressed: () {},
+                      elevation: 2.0,
+                      fillColor: sa_blue,
+                      child: Icon(
+                        Icons.photo_camera,
+                        size: 35.0,
+                        color: Colors.white
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ).inGridArea("Ph")
                   ],
                 ),
               ),
