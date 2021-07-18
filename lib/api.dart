@@ -170,7 +170,7 @@ class SizeAdviserApi {
     return userGender;
   }
 
-  void registerCurrentUser (SharedPreferences sharedPreferences, {int times = 1, bool update = false} ) async {
+  Future<bool> registerCurrentUser (SharedPreferences sharedPreferences, {int times = 1, bool update = false} ) async {
     String userGender = getUserGender(sharedPreferences);
     var queryArgs = {
       'firebase_uid': this.user.uid,
@@ -188,6 +188,7 @@ class SizeAdviserApi {
       registerCurrentUser(sharedPreferences, times: times);
     }
 
+    return true;
   }
 
   Future<BoundFittingData> boundLoadFittingData (SharedPreferences sharedPreferences, String? brand) async {
@@ -207,8 +208,8 @@ class SizeAdviserApi {
     return bfd;
   }
 
-  void tryWithSize(String fittingID, String brand, String size,
-    String standard, int fitValue) async {
+  Future<bool> tryWithSize(String fittingID, String brand, String size,
+    String standard, int fitValue, {bool change = false}) async {
 
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('HH.mm.ss.dd.MM.yyyy');
@@ -220,13 +221,21 @@ class SizeAdviserApi {
       "size": size,
       "system": standard,
       "fit_value": fitValue.toString(),
+      "fitting_id": fittingID,
       "date": formatted
     };
+
+    if (change) {
+      respArgs["rewrite"] = "1";
+    }
+
     var r = await http.get(Uri.https(saPrefix, mobileSuffix + "/try_with_size", respArgs));
     if (r.statusCode == 200) {
       print("tryWithSize, success");
+      return true;
     } else {
       print("tryWithSize, FAILURE!");
+      return false;
     }
   }
 
@@ -280,7 +289,7 @@ class SizeAdviserApi {
     return ["US", "UK", "RU", "Cm", "EU"];
   }
 
-  void removeFitting(String fittingID) async {
+  Future<bool> removeFitting(String fittingID) async {
     var q = {
       "user_id": this.user.uid,
       "fitting_id": fittingID
@@ -289,9 +298,10 @@ class SizeAdviserApi {
     if (r.statusCode != 200) {
       throw Exception("Fitting object couldn't be removed on the remote server");
     }
+    return true;
   }
 
-  void removePhoto(String fittingID, int photoIndex) async {
+  Future<bool> removePhoto(String fittingID, int photoIndex) async {
     var q = {
       "user_id": this.user.uid,
       "fitting_id": fittingID,
@@ -301,5 +311,6 @@ class SizeAdviserApi {
     if (r.statusCode != 200) {
       throw Exception("Photo couldn't be removed on the remote server");
     }
+    return true;
   }
 }

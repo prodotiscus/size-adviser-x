@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:size_adviser/new_brand.dart';
 import 'package:size_adviser/show_zoomed_of.dart';
 import 'package:size_adviser/colors.dart';
 import 'package:size_adviser/calibration_screen.dart';
@@ -26,7 +27,8 @@ Future<void> main() async {
       '/calibration': (context) => CalibrationScreen(),
       '/email-signin': (context) => EmailSignInScreen(),
       '/tab-screen': (context) => TabScreen(),
-      '/zoomed-of': (context) => ZoomedOfScreen()
+      '/zoomed-of': (context) => ZoomedOfScreen(),
+      '/new-brand': (context) => NewBrandScreen()
     },
   ),
   );

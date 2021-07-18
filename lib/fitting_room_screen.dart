@@ -250,12 +250,13 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     print(fitController!.selectedStandard! );
     print(fitController!.fitValue!.toString());
 
-    api.tryWithSize(
+    bool tResult = await api.tryWithSize(
         fitController!.fittingID!,
         fitController!.brand!,
         fitController!.selectedSize!,
         fitController!.selectedStandard!,
-        fitController!.fitValue!
+        fitController!.fitValue!,
+        change: alreadySaved
     );
     setState(() {
       fitSending = false;
@@ -271,7 +272,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
 
     return Scaffold(
       body: Center(
-          child: Column (
+          child: recommendations != null ? Column (
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
@@ -321,6 +322,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         sizesController = PageController(
                             viewportFraction: 0.2
                         );
+                        fitSending = false;
+                        alreadySaved = false;
                       });
                       loadBoundData();
                     },
@@ -391,7 +394,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
                               primary: (fitController != null &&
-                                    (fitController!.fitValue == null || fitController!.fitValue != 1))
+                                    (fitController!.fitValue == null || fitController!.fitValue != 2))
                                   ? paletteLightGray : otherFitPressedColor
                           ),
                           child: Container(
@@ -410,7 +413,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              fitController!.fitValue = 1;
+                              fitController!.fitValue = 2;
                             });
                           },
                         )),
@@ -420,7 +423,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
                               primary: (fitController != null &&
-                                    (fitController!.fitValue == null || fitController!.fitValue != 2))
+                                    (fitController!.fitValue == null || fitController!.fitValue != 1))
                                   ? paletteLightGray : otherFitPressedColor
                           ),
                           child: Container(
@@ -453,7 +456,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              fitController!.fitValue = 2;
+                              fitController!.fitValue = 1;
                             });
                           },
                         )),
@@ -589,7 +592,11 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                       ]
                     )).inGridArea("bb"),
                     Center(child:RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                            "/new-brand"
+                        );
+                      },
                       elevation: 2.0,
                       fillColor: sa_blue,
                       child: Icon(
@@ -615,6 +622,20 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                   ],
                 ),
               ),
+            ],
+          ) :
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                  child: ColorLoader4(
+                    dotOneColor: sa_blue,
+                    dotTwoColor: sa_blue,
+                    dotThreeColor: sa_blue,
+                    duration: Duration(milliseconds: 500)
+                  )
+              )
             ],
           )
       ),

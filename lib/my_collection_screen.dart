@@ -325,7 +325,7 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
     )) {
       case "RemoveFitting":
         var api = SizeAdviserApi();
-        api.removeFitting(fittingID);
+        bool rResult = await api.removeFitting(fittingID);
         loadCollection();
         break;
       case null:
@@ -350,7 +350,7 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
     )) {
       case "RemoveThisPhoto":
         var api = SizeAdviserApi();
-        api.removePhoto(fittingID, index);
+        bool rResult = await api.removePhoto(fittingID, index);
         loadCollection();
         break;
       case null:
