@@ -161,7 +161,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: IconButton(
                         onPressed: () {
                           _controller2.clear();
-                          filteringPrefix = "";
+                          setState(() {
+                            filteringPrefix = "";
+                          });
                         },
                         icon: Icon(Icons.clear),
                         padding: EdgeInsets.all(0.0)

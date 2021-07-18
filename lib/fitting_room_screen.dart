@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/api.dart';
 import 'package:size_adviser/colors.dart';
 
+import 'color_loader_4.dart';
+
 class FittingRoomScreen extends StatefulWidget {
   @override
   _FittingRoomScreenState createState() => _FittingRoomScreenState();
@@ -73,6 +75,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
   var sizesController = PageController(
       viewportFraction: 0.2
   );
+  bool fitSending = false;
+  bool alreadySaved = false;
 
   Widget produceRecommendationWidget(List<Recommendation> lst) {
     List<Widget> listForRow = [];
@@ -145,6 +149,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
           initialPage: switchTo
       );
       _sizes_index = switchTo;
+      fitController!.selectedSize = fitController!.getSelectedRange()![_sizes_index];
+      print("SET_TO");
+      print(fitController!.selectedSize);
       //sizesController.jumpToPage(switchTo);
     });
   }
@@ -231,6 +238,29 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
             )
         )
     );
+  }
+
+  void saveFitData () async {
+    setState(() {
+      fitSending = true;
+    });
+    print(fitController!.fittingID!);
+    print(fitController!.brand!);
+    print(fitController!.selectedSize! );
+    print(fitController!.selectedStandard! );
+    print(fitController!.fitValue!.toString());
+
+    api.tryWithSize(
+        fitController!.fittingID!,
+        fitController!.brand!,
+        fitController!.selectedSize!,
+        fitController!.selectedStandard!,
+        fitController!.fitValue!
+    );
+    setState(() {
+      fitSending = false;
+      alreadySaved = true;
+    });
   }
 
   @override
@@ -456,7 +486,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                             });
                           },
                         )),
-                        TextButton(
+                        if(!fitSending) TextButton(
                           style: TextButton.styleFrom(
                             textStyle: const TextStyle(
                                 fontSize: 30,
@@ -464,9 +494,22 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                             ),
                             primary: idealFitColor
                           ),
-                          onPressed: () {},
-                          child: const Text('GOT IT'),
-                        )
+                          onPressed: () {
+                            setState(() {
+                              saveFitData();
+                            });
+                          },
+                          child: Text(
+                            !alreadySaved ? 'GOT IT' : 'CHANGE'
+                          ),
+                        ),
+                        if (fitSending) Container(child:ColorLoader4(
+                          dotOneColor: idealFitColor,
+                          dotTwoColor: idealFitColor,
+                          dotThreeColor: idealFitColor,
+                          duration: Duration(seconds: 2)
+                        ),
+                        margin: EdgeInsets.only(top: 20.0))
                       ]).inGridArea("Ib"),
                     Center(child:Column(
                       children: [
@@ -545,7 +588,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ))
                       ]
                     )).inGridArea("bb"),
-                    RawMaterialButton(
+                    Center(child:RawMaterialButton(
                       onPressed: () {},
                       elevation: 2.0,
                       fillColor: sa_blue,
@@ -556,8 +599,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                       ),
                       padding: EdgeInsets.all(15.0),
                       shape: CircleBorder(),
-                    ).inGridArea("Nw"),
-                    RawMaterialButton(
+                    )).inGridArea("Nw"),
+                    Center(child:RawMaterialButton(
                       onPressed: () {},
                       elevation: 2.0,
                       fillColor: sa_blue,
@@ -568,7 +611,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                       ),
                       padding: EdgeInsets.all(15.0),
                       shape: CircleBorder(),
-                    ).inGridArea("Ph")
+                    )).inGridArea("Ph")
                   ],
                 ),
               ),

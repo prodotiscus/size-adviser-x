@@ -219,7 +219,7 @@ class SizeAdviserApi {
       "brand": brand,
       "size": size,
       "system": standard,
-      "fit_value": fitValue,
+      "fit_value": fitValue.toString(),
       "date": formatted
     };
     var r = await http.get(Uri.https(saPrefix, mobileSuffix + "/try_with_size", respArgs));
