@@ -283,19 +283,6 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                       border: UnderlineInputBorder(),
                       hintText: "38.5",
                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                      suffixIcon: Container(
-                          margin: EdgeInsets.only(top: 30.0),
-                          child: IconButton(
-                              onPressed: () {
-                                _controller3.clear();
-                                setState(() {
-                                  fitController!.selectedSize = "";
-                                });
-                              },
-                              icon: Icon(Icons.clear),
-                              padding: EdgeInsets.all(0.0)
-                          )
-                      ),
                     ),
                     onChanged: (text) {
                       setState(() {
@@ -524,7 +511,12 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                         ]
                     )).inGridArea("bb"),
                     Center(child:RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                            "/take-picture",
+                            arguments: PhotoArguments(fitController!.fittingID!)
+                        );
+                      },
                       elevation: 2.0,
                       fillColor: sa_blue,
                       child: Icon(
@@ -537,6 +529,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                     )).inGridArea("Ph")
                   ],
                 ),
+                margin: EdgeInsets.only(top: 15.0)
               ),
             ],
           ) :

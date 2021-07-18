@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:camera/camera.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/new_brand.dart';
 import 'package:size_adviser/show_zoomed_of.dart';
@@ -11,9 +12,14 @@ import 'package:size_adviser/colors.dart';
 import 'package:size_adviser/calibration_screen.dart';
 import 'package:size_adviser/email_signin_screen.dart';
 import 'package:size_adviser/tab_screen.dart';
+import 'package:size_adviser/take_picture.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
   await Firebase.initializeApp();
   runApp(MaterialApp(
     title: 'Size Adviser',
@@ -28,7 +34,8 @@ Future<void> main() async {
       '/email-signin': (context) => EmailSignInScreen(),
       '/tab-screen': (context) => TabScreen(),
       '/zoomed-of': (context) => ZoomedOfScreen(),
-      '/new-brand': (context) => NewBrandScreen()
+      '/new-brand': (context) => NewBrandScreen(),
+      '/take-picture': (context) => TakePictureScreen(camera: firstCamera)
     },
   ),
   );

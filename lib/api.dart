@@ -314,3 +314,34 @@ class SizeAdviserApi {
     return true;
   }
 }
+
+
+class ApiPhotoUploader extends SizeAdviserApi {
+  late String uid;
+  late String fittingID;
+  late String localID;
+
+  ApiPhotoUploader(String fittingID) {
+    this.uid = user.uid;
+    var rnd = new Random();
+    var next = rnd.nextDouble() * 1000000;
+    while (next < 100000) {
+      next *= 10;
+    }
+    this.localID = next.toInt().toString();
+    this.fittingID = fittingID;
+  }
+
+  String get uploadUrl => Uri.https(
+      saPrefix,
+      "$mobileSuffix/$uid/$fittingID/$localID/upload_photo"
+  ).toString();
+
+  String get filename => "$localID.png";
+}
+
+class PhotoArguments {
+  final String fittingID;
+
+  PhotoArguments(this.fittingID);
+}

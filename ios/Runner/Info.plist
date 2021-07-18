@@ -41,5 +41,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+    <string>Our app needs camera access, so you can upload photos of your fits.</string>
 </dict>
 </plist>

@@ -318,6 +318,10 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
               SimpleDialogOption(
                 onPressed: () { Navigator.pop(context, "RemoveFitting"); },
                 child: const Text('Remove fitting'),
+              ),
+              SimpleDialogOption(
+                onPressed: () { Navigator.pop(context, "AddPhoto"); },
+                child: const Text('Add new photos'),
               )
             ],
           );
@@ -327,6 +331,12 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
         var api = SizeAdviserApi();
         bool rResult = await api.removeFitting(fittingID);
         loadCollection();
+        break;
+      case "AddPhoto":
+        Navigator.of(context).pushNamed(
+            "/take-picture",
+            arguments: PhotoArguments(fittingID)
+        );
         break;
       case null:
         break;

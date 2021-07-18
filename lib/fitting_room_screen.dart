@@ -608,7 +608,19 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                       shape: CircleBorder(),
                     )).inGridArea("Nw"),
                     Center(child:RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (fitController!.fitValue == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("But how it fits you?"),
+                          ));
+                        } else {
+                          Navigator.of(context).pushNamed(
+                              "/take-picture",
+                              arguments: PhotoArguments(
+                                  fitController!.fittingID!)
+                          );
+                        }
+                      },
                       elevation: 2.0,
                       fillColor: sa_blue,
                       child: Icon(
