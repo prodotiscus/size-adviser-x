@@ -62,6 +62,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
   var standardsController = PageController(
       viewportFraction: 0.2
   );
+  var _controller2 = TextEditingController();
+  var _controller3 = TextEditingController();
   bool fitSending = false;
   bool alreadySaved = false;
 
@@ -204,38 +206,47 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
             children: <Widget>[
               Container(
                 child: Text(
-                    "enter the brand name",
+                    "new brand",
                     style: TextStyle(
-                        fontSize: defaultFontSize
+                        fontSize: defaultFontSize,
+                      color: palettePink
                     )
                 ),
                 margin: EdgeInsets.symmetric(vertical: 20.0),
               ),
-              if(optionSelector != null) Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.0),
-                  width: 350.0,
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(
-                        color: sa_blue,
-                        fontSize: 20.0
-                    ),
-                    underline: Container(
-                      height: 2,
+              Container(
+                child: TextFormField(
+                  controller: _controller2,
+                  enabled: !alreadySaved,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'enter new brand name',
+                    labelStyle: TextStyle(
                       color: sa_blue,
                     ),
-                    value: optionSelector!.capsSelected,
-                    items: optionSelector!.capsAllBrands.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {},
-                  )
+                    hintText: "Adidas",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon: Container(
+                        margin: EdgeInsets.only(top: 10.0),
+                        child: IconButton(
+                            onPressed: () {
+                              _controller2.clear();
+                              setState(() {
+                                fitController!.brand = "";
+                              });
+                            },
+                            icon: Icon(Icons.clear),
+                            padding: EdgeInsets.all(0.0)
+                        )
+                    ),
+                  ),
+                  onChanged: (text) {
+                    setState(() {
+                      fitController!.brand = text;
+                    });
+                  },
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 20.0)
               ),
               Container(
                 child: Text(
@@ -244,7 +255,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                         fontSize: defaultFontSize
                     )
                 ),
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: EdgeInsets.symmetric(vertical: 30.0),
               ),
               const Divider(
                 height: 0,
@@ -258,6 +269,41 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                 thickness: 1,
                 indent: 15,
                 endIndent: 15,
+              ),
+              Container(
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    controller: _controller3,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      fontSize: 30.0
+                    ),
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      hintText: "38.5",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      suffixIcon: Container(
+                          margin: EdgeInsets.only(top: 30.0),
+                          child: IconButton(
+                              onPressed: () {
+                                _controller3.clear();
+                                setState(() {
+                                  fitController!.selectedSize = "";
+                                });
+                              },
+                              icon: Icon(Icons.clear),
+                              padding: EdgeInsets.all(0.0)
+                          )
+                      ),
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        fitController!.selectedSize = text;
+                      });
+                    },
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
               ),
               Container(
                 //color: background,
