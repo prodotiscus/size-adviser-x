@@ -104,11 +104,14 @@ class _TabScreenState extends State<TabScreen> {
 
   void handleClick(String value) async {
     switch (value) {
-      case "Logout":
+      case "Sign Out":
         FirebaseAuth.instance.signOut();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.clear();
         Navigator.pushReplacementNamed(context, '/signin-main');
+        break;
+      case "Settings":
+        Navigator.pushNamed(context, '/settings');
         break;
     }
 

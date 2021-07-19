@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/api.dart';
 import 'package:size_adviser/colors.dart';
@@ -50,7 +51,19 @@ class FitController {
     this.fittingID = next.toInt().toString();
   }
 
-  List<String> get standards => this.standardObj!.map((Standard el) => el.name).toList();
+  List<String> get standards => prioritizeDefault(
+      this.standardObj!.map((Standard el) => el.name).toList()
+  );
+
+  List<String> prioritizeDefault (List<String> l) {
+    String defaultS = Settings.getValue("profile_default_standard", "RU");
+    int n = l.length;
+    l.removeWhere((element) => element == defaultS);
+    if (n > l.length) {
+      l.insert(0, defaultS);
+    }
+    return l;
+  }
 
   List<String>? getSelectedRange() {
     for (var subobj in this.standardObj!) {

@@ -14,6 +14,7 @@ import 'package:size_adviser/calibration_screen.dart';
 import 'package:size_adviser/email_signin_screen.dart';
 import 'package:size_adviser/tab_screen.dart';
 import 'package:size_adviser/take_picture.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,9 @@ Future<void> main() async {
   final firstCamera = cameras.first;
 
   await Firebase.initializeApp();
+
+  await Settings.init();
+
   runApp(MaterialApp(
     title: 'Size Adviser',
     // Start the app with the "/" named route. In this case, the app starts
@@ -39,7 +43,56 @@ Future<void> main() async {
       '/tab-screen': (context) => TabScreen(),
       '/zoomed-of': (context) => ZoomedOfScreen(),
       '/new-brand': (context) => NewBrandScreen(),
-      '/take-picture': (context) => TakePictureScreen(camera: firstCamera)
+      '/take-picture': (context) => TakePictureScreen(camera: firstCamera),
+      '/settings': (context) => SettingsScreen(
+        children: [
+          TextInputSettingsTile(
+            title: 'User name',
+            settingKey: 'profile_user_name',
+            initialValue: "John Johnson",
+            validator: (String username) {
+              if (username != null && username != "") {
+                return null;
+              }
+              return "User name cannot be empty!";
+            },
+            borderColor: sa_blue,
+            errorColor: palettePink,
+            onChange: (String value) async {
+              await FirebaseAuth.instance.currentUser!.updateProfile(
+                displayName: value
+              );
+            },
+          ),
+          RadioSettingsTile<String>(
+            title: 'Gender',
+            settingKey: 'profile_gender',
+            values: <String, String>{
+              "0": "Male",
+              "1": "Female"
+            },
+            selected: "1",
+            onChange: (value) {
+              debugPrint('profile_default_standard: $value');
+            },
+          ),
+          RadioSettingsTile<String>(
+            title: 'Default system',
+            settingKey: 'profile_default_standard',
+            values: <String, String>{
+              "UK": "UK",
+              "US": "US",
+              "RU": "RU",
+              "Cm": "Cm",
+              "EU": "EU"
+            },
+            selected: "RU",
+            onChange: (value) {
+              debugPrint('profile_default_standard: $value');
+            },
+          )
+        ]
+      )
     },
   ),
   );

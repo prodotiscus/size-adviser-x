@@ -47,6 +47,7 @@ dependencies:
   path_provider:
   path:
   dio: ^4.0.0
+  flutter_settings_screens:
 
 dev_dependencies:
   flutter_test:

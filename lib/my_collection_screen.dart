@@ -20,7 +20,6 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    registerUser();
     if (!collectionLoaded) {
       loadCollection();
       collectionLoaded = true;
@@ -300,12 +299,6 @@ class _MyCollectionScreenState extends State<MyCollectionScreen> {
         )
       )
     );
-  }
-
-  void registerUser() async {
-    var spf = await SharedPreferences.getInstance();
-    var api = SizeAdviserApi();
-    api.registerCurrentUser(spf);
   }
 
   Future<void> _showFittingActions(String fittingID) async {

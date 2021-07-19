@@ -5,6 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
@@ -101,10 +102,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  void registerUser() async {
+    var spf = await SharedPreferences.getInstance();
+    var api = SizeAdviserApi();
+    api.registerCurrentUser(spf);
+    Settings.setValue("profile_user_name", user!.displayName);
+  }
+
   @override
   Widget build(BuildContext context) {
+
     if (profileControl.standards.isEmpty) {
       updateStandardsList();
+      registerUser();
     }
 
     return Scaffold(
