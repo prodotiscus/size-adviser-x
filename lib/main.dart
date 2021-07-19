@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:camera/camera.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:size_adviser/auth_main_screen.dart';
 import 'package:size_adviser/new_brand.dart';
 import 'package:size_adviser/show_zoomed_of.dart';
 import 'package:size_adviser/colors.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
       '/': (context) => StartScreen(),
       // When navigating to the "/calibration" route, build the CalibrationScreen widget.
       '/calibration': (context) => CalibrationScreen(),
+      '/signin-main': (context) => AuthMainScreen(),
       '/email-signin': (context) => EmailSignInScreen(),
       '/tab-screen': (context) => TabScreen(),
       '/zoomed-of': (context) => ZoomedOfScreen(),

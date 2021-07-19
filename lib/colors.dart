@@ -20,3 +20,4 @@ const paletteBlue = Color(0xff245C9C);
 const paletteLightGray = Color(0xffE5EBF0);
 
 const black_overlay = Color(0xff66000000);
+const holoBlueLight = Color(0xff33b5e5);

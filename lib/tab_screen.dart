@@ -108,7 +108,7 @@ class _TabScreenState extends State<TabScreen> {
         FirebaseAuth.instance.signOut();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.clear();
-        Navigator.pushNamed(context, '/email-signin');
+        Navigator.pushReplacementNamed(context, '/signin-main');
         break;
     }
 

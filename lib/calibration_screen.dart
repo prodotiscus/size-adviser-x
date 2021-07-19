@@ -44,7 +44,7 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
       print(agreement);
       if (FirebaseAuth.instance.currentUser == null) {
         Navigator.of(context).pushNamedAndRemoveUntil(
-            '/email-signin', (Route<dynamic> route) => false);
+            '/signin-main', (Route<dynamic> route) => false);
       }
       else if (genderSelected != -1 && agreement) {
         Navigator.of(context).pushNamedAndRemoveUntil(
