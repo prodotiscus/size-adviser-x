@@ -34,6 +34,8 @@ Future<void> main() async {
       '/calibration': (context) => CalibrationScreen(),
       '/signin-main': (context) => AuthMainScreen(),
       '/email-signin': (context) => EmailSignInScreen(),
+      '/email-signup': (context) => EmailSignUpScreen(),
+      '/final-signin': (context) => FinalSignUpScreen(),
       '/tab-screen': (context) => TabScreen(),
       '/zoomed-of': (context) => ZoomedOfScreen(),
       '/new-brand': (context) => NewBrandScreen(),
