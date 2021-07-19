@@ -18,7 +18,7 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
 
   void selectGenderByClick(int genderValue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt("userGender", genderValue);
+    await prefs.setString("profile_gender", genderValue.toString());
     setState(() {
       genderSelected = genderValue;
     });

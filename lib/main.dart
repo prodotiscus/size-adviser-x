@@ -16,6 +16,36 @@ import 'package:size_adviser/tab_screen.dart';
 import 'package:size_adviser/take_picture.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
+class CustomSettingsScreen extends SettingsScreen {
+  /// Appbar title in Scaffold.
+  final String title;
+
+  /// Content of the screen, body of the Scaffold.
+  final List<Widget> children;
+
+  CustomSettingsScreen({
+    this.title = 'Settings',
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+        backgroundColor: sa_blue,
+      ),
+      body: ListView.builder(
+        shrinkWrap: true,
+        itemCount: children.length,
+        itemBuilder: (BuildContext context, int index) {
+          return children[index];
+        },
+      ),
+    );
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -44,7 +74,7 @@ Future<void> main() async {
       '/zoomed-of': (context) => ZoomedOfScreen(),
       '/new-brand': (context) => NewBrandScreen(),
       '/take-picture': (context) => TakePictureScreen(camera: firstCamera),
-      '/settings': (context) => SettingsScreen(
+      '/settings': (context) => CustomSettingsScreen(
         children: [
           TextInputSettingsTile(
             title: 'User name',
@@ -104,7 +134,7 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     new Future.delayed(const Duration(seconds: 3), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      int? gotGender = prefs.getInt("userGender");
+      String? gotGender = prefs.getString("profile_gender");
       if (gotGender == null) {
         Navigator.of(context).pushNamedAndRemoveUntil(
             '/calibration', (Route<dynamic> route) => false);

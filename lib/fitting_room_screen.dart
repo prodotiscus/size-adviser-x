@@ -254,6 +254,12 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
   }
 
   void saveFitData () async {
+    if (fitController!.fitValue == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("But how it fits you?"),
+      ));
+      return;
+    }
     setState(() {
       fitSending = true;
     });

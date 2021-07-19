@@ -126,21 +126,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 child: Column(
                  children: <Widget>[
-                   if(user!.photoURL != null) ClipOval(
-                    child: Image.network(
-                      largerPictureURL(user!.photoURL!)!,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
+                   if(user!.photoURL != null) GestureDetector(
+                       child: ClipOval(
+                            child: Image.network(
+                              largerPictureURL(user!.photoURL!)!,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                       ),
+                     onTap: () {
+                         Navigator.of(context).pushNamed("/settings");
+                     }
                     ),
-                  ),
-                  if(user!.photoURL == null) ClipOval(
-                    child: Image.asset(
-                      "images/avatar_placeholder.png",
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
+                  if(user!.photoURL == null) GestureDetector(
+                      child: ClipOval(
+                        child: Image.asset(
+                          "images/avatar_placeholder.png",
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
                     ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed("/settings");
+                    }
                   )
               ]),
                 margin: EdgeInsets.only(top: 20.0)
