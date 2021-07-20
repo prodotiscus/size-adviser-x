@@ -189,6 +189,12 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
     });
   }
 
+  bool isOk () {
+    return fitController!.fitValue != null && fitController!.brand != null
+        && fitController!.brand != "" && fitController!.selectedSize != null
+        && fitController!.selectedSize != "";
+  }
+
   @override
   Widget build(BuildContext context) {
     if (fitController == null) {
@@ -417,9 +423,15 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                 primary: idealFitColor
                             ),
                             onPressed: () {
-                              setState(() {
-                                saveFitData();
-                              });
+                              if (!isOk()) {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text("But how it fits you?"),
+                                ));
+                              } else {
+                                setState(() {
+                                  saveFitData();
+                                });
+                              }
                             },
                             child: Text(
                                 !alreadySaved ? 'GOT IT' : 'CHANGE'
@@ -512,10 +524,17 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                     )).inGridArea("bb"),
                     Center(child:RawMaterialButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(
-                            "/take-picture",
-                            arguments: PhotoArguments(fitController!.fittingID!)
-                        );
+                        if (!isOk()) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("But how it fits you?"),
+                          ));
+                        } else {
+                          Navigator.of(context).pushNamed(
+                              "/take-picture",
+                              arguments: PhotoArguments(
+                                  fitController!.fittingID!)
+                          );
+                        }
                       },
                       elevation: 2.0,
                       fillColor: sa_blue,

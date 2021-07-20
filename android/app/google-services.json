@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:862763273858:android:c0fe3156ca9bcb806dee9b",
+        "mobilesdk_app_id": "1:862763273858:android:81f7d84bf24efd626dee9b",
         "android_client_info": {
-          "package_name": "com.prodotiscus.size_adviser"
+          "package_name": "com.size_adviser.size_adviser"
         }
       },
       "oauth_client": [
         {
-          "client_id": "862763273858-pa09sl2hks0rh16j2u3stvtc1144e0up.apps.googleusercontent.com",
+          "client_id": "862763273858-3cjm6anav005j9sqa0o09v0beelpcfm2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.prodotiscus.size_adviser",
+            "package_name": "com.size_adviser.size_adviser",
             "certificate_hash": "cf8dfe610da8e7c350e319acdd9a01896292db7e"
           }
         },

@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.prodotiscus.size_adviser"
+        applicationId "com.size_adviser.size_adviser"
         minSdkVersion 21
         targetSdkVersion 30
         multiDexEnabled true

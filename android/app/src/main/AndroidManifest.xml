@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.prodotiscus.size_adviser">
+    package="com.size_adviser.size_adviser">
    <application
         android:label="@string/size_adviser"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/alpha_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

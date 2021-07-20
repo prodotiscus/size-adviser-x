@@ -386,7 +386,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (smallPictureURL.contains("graph.facebook.com")) {
       for (var profile in FirebaseAuth.instance.currentUser!.providerData) {
         if (FacebookAuthProvider.PROVIDER_ID == profile.providerId) {
-          var larger = "https://graph.facebook.com/" + profile.uid + "/picture?height=500&width=500";
+          var larger = "https://graph.facebook.com/" + profile.uid! + "/picture?height=500&width=500";
           return larger;
         }
       }

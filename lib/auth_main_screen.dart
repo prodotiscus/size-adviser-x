@@ -29,8 +29,13 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
   }
 
   void fbSignIn() async {
-    await signInWithFacebook();
-    Navigator.pushReplacementNamed(context, '/calibration');
+    try {
+      await signInWithFacebook();
+      Navigator.pushReplacementNamed(context, '/calibration');
+    } catch (e) {
+      print(e);
+      googleSignIn();
+    }
   }
 
   @override

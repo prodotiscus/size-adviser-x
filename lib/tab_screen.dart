@@ -2,6 +2,7 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/colors.dart';
 import 'package:size_adviser/profile_screen.dart';
@@ -106,6 +107,9 @@ class _TabScreenState extends State<TabScreen> {
     switch (value) {
       case "Sign Out":
         FirebaseAuth.instance.signOut();
+        try {
+          FacebookAuth.instance.logOut();
+        } catch (e) {};
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.clear();
         Navigator.pushReplacementNamed(context, '/signin-main');
