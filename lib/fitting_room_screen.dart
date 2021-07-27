@@ -438,7 +438,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           },
                         )),
                         Container(
-                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 1)),
                             child:ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
@@ -481,7 +481,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           },
                         )),
                         Container(
-                            margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
+                            margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 1)),
                             child: Center(child:RawMaterialButton(
                               onPressed: () {
                                 Navigator.of(context).pushNamed(
@@ -591,7 +591,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           )
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 1)),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
@@ -634,7 +634,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           },
                         )),
                         Container(
-                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 1)),
                           child: Center(child:RawMaterialButton(
                             onPressed: () {
                               if (fitController!.fitValue == null) {
