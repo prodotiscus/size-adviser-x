@@ -397,18 +397,19 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 child: LayoutGrid(
                   areas: '''
                     sb  Ib bb
-                    Nw  .  Ph
                   ''',
-                  columnSizes: [100.px, 180.px, 100.px],
+                  columnSizes: [
+                    (MediaQuery.of(context).size.width * 0.25).px,
+                    (MediaQuery.of(context).size.width * 0.4).px,
+                    (MediaQuery.of(context).size.width * 0.25).px],
                   rowSizes: [
-                    265.px,
-                    70.px
+                    (MediaQuery.of(context).size.height * 0.3).px,
                   ],
                   children: [
                   Center(child:Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: 30.0),
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01)),
                             child:ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
@@ -437,7 +438,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           },
                         )),
                         Container(
-                          margin: EdgeInsets.only(top: 15.0),
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
                             child:ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
@@ -479,12 +480,34 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                             });
                           },
                         )),
+                        Container(
+                            margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
+                            child: Center(child:RawMaterialButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    "/new-brand"
+                                );
+                              },
+                              elevation: 2.0,
+                              fillColor: sa_blue,
+                              child: Icon(
+                                  Icons.add,
+                                  size: (MediaQuery.of(context).size.height * 0.01 * 2.5),
+                                  color: Colors.white
+                              ),
+                              padding: EdgeInsets.all((MediaQuery.of(context).size.height * 0.01 * 2.5)),
+                              shape: CircleBorder(),
+                            ))
+                        )
                       ]
                     )).inGridArea("sb"),
                     Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: 30.0, bottom: 20.0),
+                          margin: EdgeInsets.only(
+                              top: (MediaQuery.of(context).size.height * 0.01 * 3),
+                              bottom: (MediaQuery.of(context).size.height * 0.01 * 0.2)
+                          ),
                             child:ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
@@ -493,8 +516,10 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                                   ? idealFitColor : otherFitPressedColor
                           ),
                           child: Container(
-                            width: 160,
-                            height: 160,
+                            /*width: 160,
+                            height: 160,*/
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            height: MediaQuery.of(context).size.width * 0.4,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(shape: BoxShape.circle),
                             child: Text(
@@ -536,7 +561,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                     Center(child:Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: 30.0),
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01)),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
@@ -566,7 +591,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           )
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 15.0),
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
@@ -607,49 +632,36 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                               fitController!.fitValue = 5;
                             });
                           },
-                        ))
+                        )),
+                        Container(
+                          margin: EdgeInsets.only(top: (MediaQuery.of(context).size.height * 0.01 * 0.5)),
+                          child: Center(child:RawMaterialButton(
+                            onPressed: () {
+                              if (fitController!.fitValue == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text("But how it fits you?"),
+                                ));
+                              } else {
+                                Navigator.of(context).pushNamed(
+                                    "/take-picture",
+                                    arguments: PhotoArguments(
+                                        fitController!.fittingID!)
+                                );
+                              }
+                            },
+                            elevation: 2.0,
+                            fillColor: sa_blue,
+                            child: Icon(
+                                Icons.photo_camera,
+                                size: (MediaQuery.of(context).size.height * 0.01 * 2.5),
+                                color: Colors.white
+                            ),
+                            padding: EdgeInsets.all((MediaQuery.of(context).size.height * 0.01 * 2.5)),
+                            shape: CircleBorder(),
+                          ))
+                        )
                       ]
                     )).inGridArea("bb"),
-                    Center(child:RawMaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                            "/new-brand"
-                        );
-                      },
-                      elevation: 2.0,
-                      fillColor: sa_blue,
-                      child: Icon(
-                        Icons.add,
-                        size: 35.0,
-                        color: Colors.white
-                      ),
-                      padding: EdgeInsets.all(15.0),
-                      shape: CircleBorder(),
-                    )).inGridArea("Nw"),
-                    Center(child:RawMaterialButton(
-                      onPressed: () {
-                        if (fitController!.fitValue == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("But how it fits you?"),
-                          ));
-                        } else {
-                          Navigator.of(context).pushNamed(
-                              "/take-picture",
-                              arguments: PhotoArguments(
-                                  fitController!.fittingID!)
-                          );
-                        }
-                      },
-                      elevation: 2.0,
-                      fillColor: sa_blue,
-                      child: Icon(
-                        Icons.photo_camera,
-                        size: 35.0,
-                        color: Colors.white
-                      ),
-                      padding: EdgeInsets.all(15.0),
-                      shape: CircleBorder(),
-                    )).inGridArea("Ph")
                   ],
                 ),
               ),
