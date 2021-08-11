@@ -9,6 +9,7 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/api.dart';
 import 'package:size_adviser/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'color_loader_4.dart';
 
@@ -25,9 +26,9 @@ class BrandOptionSelector {
 
   String get capsSelected => this.selectedBrand.toUpperCase();
   List<String> get capsAllBrands => this.allBrands.map(
-     (String s) {
-       return s.toUpperCase();
-     }
+          (String s) {
+        return s.toUpperCase();
+      }
   ).toList();
 }
 
@@ -95,40 +96,40 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     List<Widget> listForRow = [];
     for (var recom in lst) {
       listForRow.add(
-        Container(
-          width: 75.0,
-          padding: EdgeInsets.symmetric(
-            vertical: 10.0,
-            horizontal: 5.0
-          ),
-          color: sa_blue,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                recom.standard,
-                style: TextStyle(
-                  color: Colors.white
-                )
+          Container(
+              width: 75.0,
+              padding: EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 5.0
               ),
-              Text(
-                recom.value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0
-                )
+              color: sa_blue,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                        recom.standard,
+                        style: TextStyle(
+                            color: Colors.white
+                        )
+                    ),
+                    Text(
+                        recom.value,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0
+                        )
+                    )
+                  ]
               )
-            ]
           )
-        )
       );
     }
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: listForRow
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 20.0)
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: listForRow
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 20.0)
     );
   }
 
@@ -224,28 +225,28 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 return Transform.scale(
                     scale: i == _sizes_index ? 1 : 0.8,
                     child: GestureDetector(
-                      onTap: () {
-                        sizesController.animateToPage(i, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-                      },
-                      child: Container(
-                        width: 50.0,
-                        height: 50.0,
-                        child: Center(
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.transparent,
-                              child: Text(
-                                fitController!.getSelectedRange()![i],
-                                style: TextStyle(
-                                    fontSize: 27,
-                                    color: i == _sizes_index ? Colors.black : darkerGray,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                          )
+                        onTap: () {
+                          sizesController.animateToPage(i, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+                        },
+                        child: Container(
+                            width: 50.0,
+                            height: 50.0,
+                            child: Center(
+                                child: Card(
+                                  elevation: 0,
+                                  color: Colors.transparent,
+                                  child: Text(
+                                    fitController!.getSelectedRange()![i],
+                                    style: TextStyle(
+                                        fontSize: 27,
+                                        color: i == _sizes_index ? Colors.black : darkerGray,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                )
+                            )
                         )
-                      )
-                     )
+                    )
                 );
               },
             )
@@ -283,8 +284,223 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     });
   }
 
+  Widget smallPartButtons() {
+    return Center(child:Column(
+        children: [
+          Container(
+              margin: EdgeInsets.only(top: (30.0*0.875).r),
+              child:ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    primary: (fitController != null &&
+                        (fitController!.fitValue == null || fitController!.fitValue != 2))
+                        ? paletteLightGray : otherFitPressedColor
+                ),
+                child: Container(
+                  width: (80*0.875).r,
+                  height: (80*0.875).r,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  child: Text(
+                      'too small',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.0,
+                          color: sa_blue
+                      )
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    fitController!.fitValue = 2;
+                  });
+                },
+              )),
+          Container(
+              margin: EdgeInsets.only(top: (15.0*0.875).r),
+              child:ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    primary: (fitController != null &&
+                        (fitController!.fitValue == null || fitController!.fitValue != 1))
+                        ? paletteLightGray : otherFitPressedColor
+                ),
+                child: Container(
+                  width: (60*0.875).r,
+                  height: (60*0.875).r,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                            "1 size",
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12.0,
+                                color: sa_blue
+                            )
+                        ),
+                        Text(
+                            "DOWN",
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12.0,
+                                color: sa_blue
+                            )
+                        ),
+                      ]
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    fitController!.fitValue = 1;
+                  });
+                },
+              )),
+        ]
+    ));
+  }
+
+  Widget idealPartButtons() {
+    return Column(
+        children: [
+          Container(
+              margin: EdgeInsets.only(top: (30.0*0.875).r, bottom: (20.0*0.875).r),
+              child:ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    primary: (fitController != null &&
+                        (fitController!.fitValue == null || fitController!.fitValue != 3))
+                        ? idealFitColor : otherFitPressedColor
+                ),
+                child: Container(
+                  width: 140.r,
+                  height: 140.r,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  child: Text(
+                    'IDEAL FIT',
+                    style: TextStyle(fontSize: 22),
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    fitController!.fitValue = 3;
+                  });
+                },
+              )),
+          if(!fitSending) TextButton(
+            style: TextButton.styleFrom(
+                textStyle: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold
+                ),
+                primary: idealFitColor
+            ),
+            onPressed: () {
+              setState(() {
+                saveFitData();
+              });
+            },
+            child: Text(
+                !alreadySaved ? 'GOT IT' : 'CHANGE'
+            ),
+          ),
+          if (fitSending) Container(child:ColorLoader4(
+              dotOneColor: idealFitColor,
+              dotTwoColor: idealFitColor,
+              dotThreeColor: idealFitColor,
+              duration: Duration(seconds: 2)
+          ),
+              margin: EdgeInsets.only(top: (20.0*0.875).r))
+        ]);
+  }
+
+  Widget bigPartButtons() {
+    return Center(child:Column(
+        children: [
+          Container(
+              margin: EdgeInsets.only(top: (30.0*0.875).r),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    primary: (fitController != null &&
+                        (fitController!.fitValue == null || fitController!.fitValue != 4))
+                        ? paletteLightGray : otherFitPressedColor
+                ),
+                child: Container(
+                  width: (80*0.875).r,
+                  height: (80*0.875).r,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  child: Text(
+                      'too big',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.0,
+                          color: sa_blue
+                      )
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    fitController!.fitValue = 4;
+                  });
+                },
+              )
+          ),
+          Container(
+              margin: EdgeInsets.only(top: (15.0*0.875).r),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    primary: (fitController != null &&
+                        (fitController!.fitValue == null || fitController!.fitValue != 5))
+                        ? paletteLightGray : otherFitPressedColor
+                ),
+                child: Container(
+                  width: (60*0.875).r,
+                  height: (60*0.875).r,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                            "1 size",
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12.0,
+                                color: sa_blue
+                            )
+                        ),
+                        Text(
+                            "UP",
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12.0,
+                                color: sa_blue
+                            )
+                        ),
+                      ]
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    fitController!.fitValue = 5;
+                  });
+                },
+              ))
+        ]
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
+
     if (recommendations == null) {
       loadBoundData();
     }
@@ -296,24 +512,24 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
             children: <Widget>[
               Container(
                 child: Text(
-                  "choose brand",
-                  style: TextStyle(
-                    fontSize: defaultFontSize
-                  )
+                    "choose brand",
+                    style: TextStyle(
+                        fontSize: defaultFontSize
+                    )
                 ),
-                margin: EdgeInsets.symmetric(vertical: 20.0),
+                margin: EdgeInsets.symmetric(vertical: (20.0*0.875).r),
               ),
               if(optionSelector != null) Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.0),
-                width: 350.0,
-                child: DropdownButton<String>(
-                  isExpanded: true,
+                  margin: EdgeInsets.symmetric(horizontal: (20.0*0.875).r),
+                  width: (350.0*0.875).r,
+                  child: DropdownButton<String>(
+                    isExpanded: true,
                     icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
+                    iconSize: (24*0.875).r,
                     elevation: 16,
                     style: const TextStyle(
-                      color: sa_blue,
-                      fontSize: 20.0
+                        color: sa_blue,
+                        fontSize: 20.0
                     ),
                     underline: Container(
                       height: 2,
@@ -349,19 +565,19 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                   )
               ),
               Container(
-                child: Text(
-                    "size recommendation",
-                    style: TextStyle(
-                        fontSize: defaultFontSize
-                    )
-                ),
-                margin: EdgeInsets.only(top: 10.0)
+                  child: Text(
+                      "size recommendation",
+                      style: TextStyle(
+                          fontSize: defaultFontSize
+                      )
+                  ),
+                  margin: EdgeInsets.only(top: (10.0*0.875).r)
               ),
               if (recommendations != null) Center(
-                child: Container(
-                  child: recommendations!,
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                )
+                  child: Container(
+                    child: recommendations!,
+                    margin: EdgeInsets.symmetric(vertical: (10.0*0.875).r),
+                  )
               ),
               Container(
                 child: Text(
@@ -370,7 +586,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         fontSize: defaultFontSize
                     )
                 ),
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: EdgeInsets.symmetric(vertical: (10.0*0.875).r),
               ),
               const Divider(
                 height: 0,
@@ -399,217 +615,15 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                     sb  Ib bb
                     Nw  .  Ph
                   ''',
-                  columnSizes: [100.px, 180.px, 100.px],
+                  columnSizes: [(100*0.875).r.px, (180*0.875).r.px, (100*0.875).r.px],
                   rowSizes: [
-                    265.px,
-                    70.px
+                    (265*0.875).r.px,
+                    (70*0.875).r.px
                   ],
                   children: [
-                  Center(child:Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30.0),
-                            child:ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              primary: (fitController != null &&
-                                    (fitController!.fitValue == null || fitController!.fitValue != 2))
-                                  ? paletteLightGray : otherFitPressedColor
-                          ),
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(shape: BoxShape.circle),
-                            child: Text(
-                              'too small',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 12.0,
-                                  color: sa_blue
-                              )
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              fitController!.fitValue = 2;
-                            });
-                          },
-                        )),
-                        Container(
-                          margin: EdgeInsets.only(top: 15.0),
-                            child:ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              primary: (fitController != null &&
-                                    (fitController!.fitValue == null || fitController!.fitValue != 1))
-                                  ? paletteLightGray : otherFitPressedColor
-                          ),
-                          child: Container(
-                            width: 60,
-                            height: 60,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(shape: BoxShape.circle),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      "1 size",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 12.0,
-                                          color: sa_blue
-                                      )
-                                  ),
-                                  Text(
-                                      "DOWN",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 12.0,
-                                          color: sa_blue
-                                      )
-                                  ),
-                                ]
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              fitController!.fitValue = 1;
-                            });
-                          },
-                        )),
-                      ]
-                    )).inGridArea("sb"),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30.0, bottom: 20.0),
-                            child:ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              primary: (fitController != null &&
-                                    (fitController!.fitValue == null || fitController!.fitValue != 3))
-                                  ? idealFitColor : otherFitPressedColor
-                          ),
-                          child: Container(
-                            width: 160,
-                            height: 160,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(shape: BoxShape.circle),
-                            child: Text(
-                              'IDEAL FIT',
-                              style: TextStyle(fontSize: 22),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              fitController!.fitValue = 3;
-                            });
-                          },
-                        )),
-                        if(!fitSending) TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(
-                                fontSize: 30,
-                              fontWeight: FontWeight.bold
-                            ),
-                            primary: idealFitColor
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              saveFitData();
-                            });
-                          },
-                          child: Text(
-                            !alreadySaved ? 'GOT IT' : 'CHANGE'
-                          ),
-                        ),
-                        if (fitSending) Container(child:ColorLoader4(
-                          dotOneColor: idealFitColor,
-                          dotTwoColor: idealFitColor,
-                          dotThreeColor: idealFitColor,
-                          duration: Duration(seconds: 2)
-                        ),
-                        margin: EdgeInsets.only(top: 20.0))
-                      ]).inGridArea("Ib"),
-                    Center(child:Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30.0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              primary: (fitController != null &&
-                                    (fitController!.fitValue == null || fitController!.fitValue != 4))
-                                  ? paletteLightGray : otherFitPressedColor
-                            ),
-                            child: Container(
-                              width: 80,
-                              height: 80,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(shape: BoxShape.circle),
-                              child: Text(
-                                'too big',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 12.0,
-                                  color: sa_blue
-                                )
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                fitController!.fitValue = 4;
-                              });
-                            },
-                          )
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 15.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            primary: (fitController != null &&
-                                    (fitController!.fitValue == null || fitController!.fitValue != 5))
-                                ? paletteLightGray : otherFitPressedColor
-                          ),
-                          child: Container(
-                            width: 60,
-                            height: 60,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(shape: BoxShape.circle),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "1 size",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12.0,
-                                    color: sa_blue
-                                  )
-                                ),
-                                Text(
-                                  "UP",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12.0,
-                                    color: sa_blue
-                                  )
-                                ),
-                                ]
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              fitController!.fitValue = 5;
-                            });
-                          },
-                        ))
-                      ]
-                    )).inGridArea("bb"),
+                    smallPartButtons().inGridArea("sb"),
+                    idealPartButtons().inGridArea("Ib"),
+                    bigPartButtons().inGridArea("bb"),
                     Center(child:RawMaterialButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(
@@ -619,11 +633,11 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                       elevation: 2.0,
                       fillColor: sa_blue,
                       child: Icon(
-                        Icons.add,
-                        size: 35.0,
-                        color: Colors.white
+                          Icons.add,
+                          size: 35.0,
+                          color: Colors.white
                       ),
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all((15.0*0.875).r),
                       shape: CircleBorder(),
                     )).inGridArea("Nw"),
                     Center(child:RawMaterialButton(
@@ -643,11 +657,11 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                       elevation: 2.0,
                       fillColor: sa_blue,
                       child: Icon(
-                        Icons.photo_camera,
-                        size: 35.0,
-                        color: Colors.white
+                          Icons.photo_camera,
+                          size: 35.0,
+                          color: Colors.white
                       ),
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all((15.0*0.875).r),
                       shape: CircleBorder(),
                     )).inGridArea("Ph")
                   ],
@@ -661,10 +675,10 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
             children: [
               Container(
                   child: ColorLoader4(
-                    dotOneColor: sa_blue,
-                    dotTwoColor: sa_blue,
-                    dotThreeColor: sa_blue,
-                    duration: Duration(milliseconds: 500)
+                      dotOneColor: sa_blue,
+                      dotTwoColor: sa_blue,
+                      dotThreeColor: sa_blue,
+                      duration: Duration(milliseconds: 500)
                   )
               )
             ],
