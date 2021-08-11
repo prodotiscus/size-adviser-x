@@ -97,10 +97,10 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     for (var recom in lst) {
       listForRow.add(
           Container(
-              width: 75.0,
+              width: (75.0*0.875).r,
               padding: EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 5.0
+                  vertical: (10.0*0.875).r,
+                  horizontal: (5.0*0.875).r
               ),
               color: sa_blue,
               child: Column(
@@ -129,7 +129,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: listForRow
         ),
-        margin: EdgeInsets.symmetric(horizontal: 20.0)
+        margin: EdgeInsets.symmetric(horizontal: (20.0*0.875).r)
     );
   }
 
@@ -172,9 +172,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
 
   Widget standardsScroller() {
     return Container(
-        margin: EdgeInsets.only(top: 10.0),
+        margin: EdgeInsets.only(top: (10.0*0.875).r),
         child: SizedBox(
-            height: 50,
+            height: (50*0.875).r,
             child: PageView.builder(
               itemCount: fitController!.standards.length,
               controller: standardsController,
@@ -209,9 +209,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
 
   Widget sizesScroller() {
     return Container(
-        margin: EdgeInsets.only(top: 10.0),
+        margin: EdgeInsets.only(top: (10.0*0.875).r),
         child: SizedBox(
-            height: 50,
+            height: (50*0.875).r,
             child: PageView.builder(
               itemCount: fitController!.getSelectedRange()!.length,
               controller: sizesController,
@@ -229,8 +229,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           sizesController.animateToPage(i, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
                         },
                         child: Container(
-                            width: 50.0,
-                            height: 50.0,
+                            width: (50.0*0.875).r,
+                            height: (50.0*0.875).r,
                             child: Center(
                                 child: Card(
                                   elevation: 0,
