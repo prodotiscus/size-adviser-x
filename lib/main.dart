@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/auth_main_screen.dart';
 import 'package:size_adviser/new_brand.dart';
@@ -56,7 +57,9 @@ Future<void> main() async {
 
   await Settings.init();
 
-  runApp(MaterialApp(
+  runApp(ScreenUtilInit(
+    designSize: Size(412, 914),
+    builder: () => MaterialApp(
     title: 'Size Adviser',
     // Start the app with the "/" named route. In this case, the app starts
     // on the StartScreen widget.
@@ -125,7 +128,7 @@ Future<void> main() async {
       )
     },
   ),
-  );
+  ));
 }
 
 

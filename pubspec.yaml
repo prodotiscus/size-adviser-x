@@ -49,6 +49,8 @@ dependencies:
   dio: ^4.0.0
   flutter_settings_screens:
   firebase_auth_platform_interface: ^4.3.1
+  responsive_grid: ^2.0.0
+  flutter_screenutil: ^5.0.0+2
 
 dev_dependencies:
   flutter_test:
