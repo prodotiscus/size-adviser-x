@@ -97,10 +97,10 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     for (var recom in lst) {
       listForRow.add(
           Container(
-              width: (75.0*0.875).r,
+              width: (75.0*1.0000).r,
               padding: EdgeInsets.symmetric(
-                  vertical: (10.0*0.875).r,
-                  horizontal: (5.0*0.875).r
+                  vertical: (10.0*1.0000).r,
+                  horizontal: (5.0*1.0000).h
               ),
               color: sa_blue,
               child: Column(
@@ -129,7 +129,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: listForRow
         ),
-        margin: EdgeInsets.symmetric(horizontal: (20.0*0.875).r)
+        margin: EdgeInsets.symmetric(horizontal: (20.0*1.0000).r)
     );
   }
 
@@ -172,9 +172,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
 
   Widget standardsScroller() {
     return Container(
-        margin: EdgeInsets.only(top: (10.0*0.875).r),
+        margin: EdgeInsets.only(top: (10.0*1.0000).h),
         child: SizedBox(
-            height: (50*0.875).r,
+            height: (50*1.0000).h,
             child: PageView.builder(
               itemCount: fitController!.standards.length,
               controller: standardsController,
@@ -209,9 +209,9 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
 
   Widget sizesScroller() {
     return Container(
-        margin: EdgeInsets.only(top: (10.0*0.875).r),
+        margin: EdgeInsets.only(top: (10.0*1.0000).h),
         child: SizedBox(
-            height: (50*0.875).r,
+            height: (50*1.0000).h,
             child: PageView.builder(
               itemCount: fitController!.getSelectedRange()!.length,
               controller: sizesController,
@@ -229,8 +229,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           sizesController.animateToPage(i, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
                         },
                         child: Container(
-                            width: (50.0*0.875).r,
-                            height: (50.0*0.875).r,
+                            width: (50.0*1.0000).r,
+                            height: (50.0*1.0000).h,
                             child: Center(
                                 child: Card(
                                   elevation: 0,
@@ -288,7 +288,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     return Center(child:Column(
         children: [
           Container(
-              margin: EdgeInsets.only(top: (30.0*0.875).r),
+              margin: EdgeInsets.only(top: (30.0*1.0000).h),
               child:ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
@@ -297,8 +297,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ? paletteLightGray : otherFitPressedColor
                 ),
                 child: Container(
-                  width: (80*0.875).r,
-                  height: (80*0.875).r,
+                  width: (80*1.0000).r,
+                  height: (80*1.0000).h,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Text(
@@ -317,7 +317,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 },
               )),
           Container(
-              margin: EdgeInsets.only(top: (15.0*0.875).r),
+              margin: EdgeInsets.only(top: (15.0*1.0000).h),
               child:ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
@@ -326,8 +326,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ? paletteLightGray : otherFitPressedColor
                 ),
                 child: Container(
-                  width: (60*0.875).r,
-                  height: (60*0.875).r,
+                  width: (60*1.0000).r,
+                  height: (60*1.0000).h,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Column(
@@ -367,7 +367,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     return Column(
         children: [
           Container(
-              margin: EdgeInsets.only(top: (30.0*0.875).r, bottom: (20.0*0.875).r),
+              margin: EdgeInsets.only(top: (30.0*1.0000).h, bottom: (20.0*1.0000).h),
               child:ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
@@ -414,7 +414,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
               dotThreeColor: idealFitColor,
               duration: Duration(seconds: 2)
           ),
-              margin: EdgeInsets.only(top: (20.0*0.875).r))
+              margin: EdgeInsets.only(top: (20.0*1.0000).h))
         ]);
   }
 
@@ -422,7 +422,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     return Center(child:Column(
         children: [
           Container(
-              margin: EdgeInsets.only(top: (30.0*0.875).r),
+              margin: EdgeInsets.only(top: (30.0*1.0000).h),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
@@ -431,8 +431,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ? paletteLightGray : otherFitPressedColor
                 ),
                 child: Container(
-                  width: (80*0.875).r,
-                  height: (80*0.875).r,
+                  width: (80*1.0000).r,
+                  height: (80*1.0000).h,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Text(
@@ -452,7 +452,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
               )
           ),
           Container(
-              margin: EdgeInsets.only(top: (15.0*0.875).r),
+              margin: EdgeInsets.only(top: (15.0*1.0000).h),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
@@ -461,8 +461,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ? paletteLightGray : otherFitPressedColor
                 ),
                 child: Container(
-                  width: (60*0.875).r,
-                  height: (60*0.875).r,
+                  width: (60*1.0000).r,
+                  height: (60*1.0000).h,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Column(
@@ -517,15 +517,15 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         fontSize: defaultFontSize
                     )
                 ),
-                margin: EdgeInsets.symmetric(vertical: (20.0*0.875).r),
+                margin: EdgeInsets.symmetric(vertical: (20.0*1.0000).h),
               ),
               if(optionSelector != null) Container(
-                  margin: EdgeInsets.symmetric(horizontal: (20.0*0.875).r),
-                  width: (350.0*0.875).r,
+                  margin: EdgeInsets.symmetric(horizontal: (20.0*1.0000).r),
+                  width: (350.0*1.0000).r,
                   child: DropdownButton<String>(
                     isExpanded: true,
                     icon: const Icon(Icons.arrow_downward),
-                    iconSize: (24*0.875).r,
+                    iconSize: (24*1.0000).r,
                     elevation: 16,
                     style: const TextStyle(
                         color: sa_blue,
@@ -571,12 +571,12 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           fontSize: defaultFontSize
                       )
                   ),
-                  margin: EdgeInsets.only(top: (10.0*0.875).r)
+                  margin: EdgeInsets.only(top: (10.0*1.0000).h)
               ),
               if (recommendations != null) Center(
                   child: Container(
                     child: recommendations!,
-                    margin: EdgeInsets.symmetric(vertical: (10.0*0.875).r),
+                    margin: EdgeInsets.symmetric(vertical: (10.0*1.0000).h),
                   )
               ),
               Container(
@@ -586,7 +586,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         fontSize: defaultFontSize
                     )
                 ),
-                margin: EdgeInsets.symmetric(vertical: (10.0*0.875).r),
+                margin: EdgeInsets.symmetric(vertical: (10.0*1.0000).h),
               ),
               const Divider(
                 height: 0,
@@ -615,10 +615,10 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                     sb  Ib bb
                     Nw  .  Ph
                   ''',
-                  columnSizes: [(100*0.875).r.px, (180*0.875).r.px, (100*0.875).r.px],
+                  columnSizes: [(100*1.0000).r.px, (180*1.0000).r.px, (100*1.0000).r.px],
                   rowSizes: [
-                    (265*0.875).r.px,
-                    (70*0.875).r.px
+                    (265*1.0000).h.px,
+                    (70*1.0000).h.px
                   ],
                   children: [
                     smallPartButtons().inGridArea("sb"),
@@ -637,7 +637,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           size: 35.0,
                           color: Colors.white
                       ),
-                      padding: EdgeInsets.all((15.0*0.875).r),
+                      padding: EdgeInsets.all((15.0*1.0000).r),
                       shape: CircleBorder(),
                     )).inGridArea("Nw"),
                     Center(child:RawMaterialButton(
@@ -661,7 +661,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                           size: 35.0,
                           color: Colors.white
                       ),
-                      padding: EdgeInsets.all((15.0*0.875).r),
+                      padding: EdgeInsets.all((15.0*1.0000).r),
                       shape: CircleBorder(),
                     )).inGridArea("Ph")
                   ],

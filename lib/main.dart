@@ -58,7 +58,7 @@ Future<void> main() async {
   await Settings.init();
 
   runApp(ScreenUtilInit(
-    designSize: Size(360, 690),
+    designSize: Size(412, 914),
     builder: () => MaterialApp(
     title: 'Size Adviser',
     // Start the app with the "/" named route. In this case, the app starts
