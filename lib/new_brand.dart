@@ -8,6 +8,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:size_adviser/api.dart';
 import 'package:size_adviser/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'color_loader_4.dart';
 
@@ -72,10 +73,10 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
     for (var recom in lst) {
       listForRow.add(
           Container(
-              width: 75.0,
+              width: 75.r,
               padding: EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 5.0
+                  vertical: 10.h,
+                  horizontal: 5.r
               ),
               color: sa_blue,
               child: Column(
@@ -104,7 +105,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: listForRow
         ),
-        margin: EdgeInsets.symmetric(horizontal: 20.0)
+        margin: EdgeInsets.symmetric(horizontal: 20.r)
     );
   }
 
@@ -130,7 +131,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
 
   Widget standardsScroller() {
     return Container(
-        margin: EdgeInsets.only(top: 10.0),
+        margin: EdgeInsets.only(top: 10.h),
         child: SizedBox(
             height: 50,
             child: PageView.builder(
@@ -218,7 +219,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                       color: palettePink
                     )
                 ),
-                margin: EdgeInsets.symmetric(vertical: 20.0),
+                margin: EdgeInsets.symmetric(vertical: 20.h),
               ),
               Container(
                 child: TextFormField(
@@ -233,7 +234,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                     hintText: "Adidas",
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon: Container(
-                        margin: EdgeInsets.only(top: 10.0),
+                        margin: EdgeInsets.only(top: 10.h),
                         child: IconButton(
                             onPressed: () {
                               _controller2.clear();
@@ -252,7 +253,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                     });
                   },
                 ),
-                margin: EdgeInsets.symmetric(horizontal: 20.0)
+                margin: EdgeInsets.symmetric(horizontal: 20.r)
               ),
               Container(
                 child: Text(
@@ -261,7 +262,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                         fontSize: defaultFontSize
                     )
                 ),
-                margin: EdgeInsets.symmetric(vertical: 30.0),
+                margin: EdgeInsets.symmetric(vertical: 30.h),
               ),
               const Divider(
                 height: 0,
@@ -296,7 +297,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                       });
                     },
                   ),
-                  margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+                  margin: EdgeInsets.symmetric(horizontal: 20.r, vertical: 10.h)
               ),
               Container(
                 //color: background,
@@ -305,16 +306,16 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                     sb  Ib bb
                     .   .  Ph
                   ''',
-                  columnSizes: [100.px, 180.px, 100.px],
+                  columnSizes: [100.r.px, 180.r.px, 100.r.px],
                   rowSizes: [
-                    265.px,
-                    70.px
+                    265.h.px,
+                    70.h.px
                   ],
                   children: [
                     Center(child:Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 30.0),
+                              margin: EdgeInsets.only(top: 30.h),
                               child:ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     shape: CircleBorder(),
@@ -323,8 +324,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                         ? paletteLightGray : otherFitPressedColor
                                 ),
                                 child: Container(
-                                  width: 80,
-                                  height: 80,
+                                  width: 80.r,
+                                  height: 80.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(shape: BoxShape.circle),
                                   child: Text(
@@ -343,7 +344,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                 },
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 15.0),
+                              margin: EdgeInsets.only(top: 15.h),
                               child:ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     shape: CircleBorder(),
@@ -352,8 +353,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                         ? paletteLightGray : otherFitPressedColor
                                 ),
                                 child: Container(
-                                  width: 60,
-                                  height: 60,
+                                  width: 60.r,
+                                  height: 60.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(shape: BoxShape.circle),
                                   child: Column(
@@ -390,7 +391,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                     Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 30.0, bottom: 20.0),
+                              margin: EdgeInsets.only(top: 30.h, bottom: 20.h),
                               child:ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     shape: CircleBorder(),
@@ -399,8 +400,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                         ? idealFitColor : otherFitPressedColor
                                 ),
                                 child: Container(
-                                  width: 160,
-                                  height: 160,
+                                  width: 160.r,
+                                  height: 160.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(shape: BoxShape.circle),
                                   child: Text(
@@ -443,12 +444,12 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                               dotThreeColor: idealFitColor,
                               duration: Duration(seconds: 2)
                           ),
-                              margin: EdgeInsets.only(top: 20.0))
+                              margin: EdgeInsets.only(top: 20.h))
                         ]).inGridArea("Ib"),
                     Center(child:Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 30.0),
+                              margin: EdgeInsets.only(top: 30.h),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     shape: CircleBorder(),
@@ -457,8 +458,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                         ? paletteLightGray : otherFitPressedColor
                                 ),
                                 child: Container(
-                                  width: 80,
-                                  height: 80,
+                                  width: 80.r,
+                                  height: 80.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(shape: BoxShape.circle),
                                   child: Text(
@@ -478,7 +479,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                               )
                           ),
                           Container(
-                              margin: EdgeInsets.only(top: 15.0),
+                              margin: EdgeInsets.only(top: 15.h),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     shape: CircleBorder(),
@@ -487,8 +488,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                         ? paletteLightGray : otherFitPressedColor
                                 ),
                                 child: Container(
-                                  width: 60,
-                                  height: 60,
+                                  width: 60.r,
+                                  height: 60.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(shape: BoxShape.circle),
                                   child: Column(
@@ -540,15 +541,15 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                       fillColor: sa_blue,
                       child: Icon(
                           Icons.photo_camera,
-                          size: 35.0,
+                          size: 35.r,
                           color: Colors.white
                       ),
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(15.r),
                       shape: CircleBorder(),
                     )).inGridArea("Ph")
                   ],
                 ),
-                margin: EdgeInsets.only(top: 15.0)
+                margin: EdgeInsets.only(top: 15.h)
               ),
             ],
           ) :
