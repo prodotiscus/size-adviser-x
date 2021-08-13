@@ -306,7 +306,7 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                     sb  Ib bb
                     .   .  Ph
                   ''',
-                  columnSizes: [100.r.px, 180.r.px, 100.r.px],
+                  columnSizes: [105.r.px, 180.r.px, 105.r.px],
                   rowSizes: [
                     265.h.px,
                     70.h.px
@@ -324,8 +324,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                         ? paletteLightGray : otherFitPressedColor
                                 ),
                                 child: Container(
-                                  width: 80.r,
-                                  height: 80.h,
+                                  width: 85.r,
+                                  height: 85.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(shape: BoxShape.circle),
                                   child: Text(
@@ -458,8 +458,8 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
                                         ? paletteLightGray : otherFitPressedColor
                                 ),
                                 child: Container(
-                                  width: 80.r,
-                                  height: 80.h,
+                                  width: 85.r,
+                                  height: 85.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(shape: BoxShape.circle),
                                   child: Text(

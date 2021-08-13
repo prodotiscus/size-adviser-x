@@ -297,8 +297,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ? paletteLightGray : otherFitPressedColor
                 ),
                 child: Container(
-                  width: (80*1.0000).r,
-                  height: (80*1.0000).h,
+                  width: (85*1.0000).r,
+                  height: (85*1.0000).r,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Text(
@@ -327,7 +327,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 ),
                 child: Container(
                   width: (60*1.0000).r,
-                  height: (60*1.0000).h,
+                  height: (60*1.0000).r,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Column(
@@ -431,8 +431,8 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                         ? paletteLightGray : otherFitPressedColor
                 ),
                 child: Container(
-                  width: (80*1.0000).r,
-                  height: (80*1.0000).h,
+                  width: (85*1.0000).r,
+                  height: (85*1.0000).r,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Text(
@@ -462,7 +462,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 ),
                 child: Container(
                   width: (60*1.0000).r,
-                  height: (60*1.0000).h,
+                  height: (60*1.0000).r,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Column(
@@ -615,7 +615,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                     sb  Ib bb
                     Nw  .  Ph
                   ''',
-                  columnSizes: [(100*1.0000).r.px, (180*1.0000).r.px, (100*1.0000).r.px],
+                  columnSizes: [(105*1.0000).r.px, (180*1.0000).r.px, (105*1.0000).r.px],
                   rowSizes: [
                     (265*1.0000).h.px,
                     (70*1.0000).h.px
