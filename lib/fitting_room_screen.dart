@@ -97,7 +97,7 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
     for (var recom in lst) {
       listForRow.add(
           Container(
-              width: (75.0*1.0000).r,
+              width: (90.0*1.0000).r,
               padding: EdgeInsets.symmetric(
                   vertical: (10.0*1.0000).r,
                   horizontal: (5.0*1.0000).h
