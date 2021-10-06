@@ -44,12 +44,17 @@ class FitController {
     this.brand = brand;
     this.standardObj = standardObj;
 
+    this.updateFittingID();
+  }
+
+  bool updateFittingID () {
     var rnd = new Random();
     var next = rnd.nextDouble() * 1000000;
     while (next < 100000) {
       next *= 10;
     }
     this.fittingID = next.toInt().toString();
+    return true;
   }
 
   List<String> get standards => prioritizeDefault(
@@ -182,6 +187,10 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 setState(() {
                   _standards_index = index;
                   fitController!.selectedStandard = fitController!.standards[index];
+                  if (alreadySaved) {
+                    alreadySaved = !alreadySaved;
+                    fitController!.updateFittingID();
+                  }
                 });
               },
               itemBuilder: (_, i) {
@@ -219,6 +228,10 @@ class _FittingRoomScreenState extends State<FittingRoomScreen> {
                 setState(() {
                   _sizes_index = index;
                   fitController!.selectedSize = fitController!.getSelectedRange()![index];
+                  if (alreadySaved) {
+                    alreadySaved = !alreadySaved;
+                    fitController!.updateFittingID();
+                  }
                 });
               },
               itemBuilder: (_, i) {
